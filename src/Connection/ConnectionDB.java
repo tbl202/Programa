@@ -14,6 +14,7 @@ public class ConnectionDB {
 	private static Connection con = null;
 	private static Statement state;
 
+	//Instanciar a classe
 	public ConnectionDB() {
 		serverName = "localhost:3306";
 		database = "tbl_20";
