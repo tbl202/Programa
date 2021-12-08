@@ -1,15 +1,18 @@
 package applcation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Partida {
 
 	Scanner sc = new Scanner(System.in);
 
 	List<Jogador> listJ = null;
-	List<Pergunta> perguntas = null; 
+	List<Pergunta> perguntas = null;
 	Pergunta p = null;
 
 	public Partida() {
@@ -17,6 +20,7 @@ public class Partida {
 		this.listJ = new ArrayList<>();
 		this.p = new Pergunta();
 		p.loadPerguntas(perguntas);
+
 	}
 
 	public void mostrarPerguntas() {
@@ -61,6 +65,9 @@ public class Partida {
 
 	// Falta a linha final
 	public void mostrarMenuInicial() {
+
+		Scanner sc = new Scanner(System.in);
+
 		clearConsole();
 
 		System.out.println("[1] Inicializar Jogo");
@@ -85,6 +92,8 @@ public class Partida {
 		} else {
 			start();
 		}
+
+		sc.close();
 
 	}
 
@@ -143,87 +152,105 @@ public class Partida {
 	}
 
 	private void cadastroJogador() {
-		
+
 		Scanner sc = new Scanner(System.in);
-	
+
 		if (listJ.size() != 0) {
 			listJ.clear();
 		}
+
+		clearConsole();
 
 		for (int i = 1; i < 3; i++) {
 
 			System.out.print(i + "°" + " Jogador escolha seu nick: ");
 			String nome = sc.nextLine();
+			Jogador jt = new Jogador(nome);
 
-			while (NomeEmUso(listJ, nome)) {
-				System.out.print("O nome já está em uso. Tente outra vez: ");
+			while (listJ.contains(jt)) {
+				System.out.println("O nome já está em uso. Tente outra vez: ");
+				System.out.print(i + "°" + " Jogador escolha seu nick: ");
 				nome = sc.nextLine();
+				jt = new Jogador(nome);
 			}
 
 			listJ.add(new Jogador(nome));
+
 		}
 		
+		System.out.println("-------------------");
+		for (Jogador jtt : listJ) {		
+			System.out.printf("Jogadores cadastrados: ");
+			System.out.println(jtt);
+		}
+
 		sc.close();
+
 	}
-	
+
 	// Método pra verificar se o Nome já está em uso
-	public static boolean NomeEmUso(List<Jogador> list, String nome) {
+/*	public static boolean NomeEmUso(List<Jogador> list, String nome) {
 
-		Jogador j = list.stream().filter(x -> x.getNome() == nome).findFirst().orElse(null);
-		return j != null;
+		List<Jogador> result = list.stream().filter(x -> x.getNome() == nome).collect(Collectors.toList());
+
+		if (result.size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
-
+*/
 	public void escolherPersonagem() {
-		
+
 		Scanner sc = new Scanner(System.in);
-		
+
 		try {
-		List<Personagem> listTemporaria = null;
-		criarPersonagens(listTemporaria);
+			List<Personagem> listTemporaria = Arrays.asList(
 
-		for (int i = 0; i < listJ.size(); i++) {
-			System.out.println("Personagens: ");
-			int cont = 1;
-			for (Personagem pers : listTemporaria) {
+					new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
+					new Personagem("Mago"), new Personagem("Silvio Santos")
 
-				if (!pers.getStatus()) {
-					System.out.println("[" + cont + "] " + pers.toString()); // Substituir por toString Personagem
+			);
+
+			for (int i = 0; i < listJ.size(); i++) {
+				System.out.println("\nPersonagens: ");
+
+				int cont = 1;
+				for (Personagem pers : listTemporaria) {
+
+					if (!pers.getStatus()) {
+						System.out.println("[" + cont + "] " + pers.toString()); // Substituir por toString Personagem
+					}
+
+					cont++;
 				}
 
-				cont++;
+				System.out.print("Jogador: " + listJ.get(i).getNome() + "\nEscolha seu Personagem: ");
+				int opcao = sc.nextInt();
+				opcao--;
+				listTemporaria.get(opcao).setStatus(true);
+				listJ.get(i).setPersonagem(opcao, listTemporaria);
 			}
+		}
 
-			System.out.print("Jogador " + listJ.get(i).getNome() + "escolha seu Personagem: ");
-			int opcao = sc.nextInt(); // colocar um while pra evitar erro
-			listTemporaria.get(opcao).setStatus(true);
-			listJ.get(i).setPersonagem(opcao, listTemporaria);
+		catch (Exception ex) {
+			System.out.println(ex.getMessage());
 		}
-		}
-		
-		catch (Exception ex) {}
-		
+
 		sc.close();
-		
+
 	}
 
 	// Colocar uma lista de Parametro que vai apontar pra essa lista quano esse
 	// método fechar
 	// A Lista p será utilizada no metódo escolherPersonagem
-	public void criarPersonagens(List<Personagem> prs) {
-
-		prs.add(new Personagem("Guerreiro"));
-		prs.add(new Personagem("Arqueiro"));
-		prs.add(new Personagem("Caçador"));
-		prs.add(new Personagem("Mago"));
-		prs.add(new Personagem("Silvio Santos"));
-
-	}
 
 	// Metodo pra deixar o console Clear
 	public final static void clearConsole() {
-		for (int i = 0; i < 15; ++i)
+		for (int i = 0; i < 15; ++i) {
 			System.out.println();
+		}
 	}
 
 }
