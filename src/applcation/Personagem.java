@@ -66,7 +66,11 @@ public class Personagem {
 	}
 
 	public String toString() {
-		return "Nome: " + name + ", Habilidades: " + this.habilidades.toString();
+		if (this.habilidades == null) {
+			return name;
+		} else {
+			return name + ", Habilidades: " + this.habilidades.toString();
+		}
 	}
 
 }

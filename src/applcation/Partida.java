@@ -1,6 +1,5 @@
 package applcation;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +7,8 @@ import java.util.Scanner;
 
 public class Partida {
 
+	// Necessário implementar uns try catch nos metódos em que o Scanner é
+	// utilizado, evitando a entrada de dados incorretamente
 	Scanner sc = new Scanner(System.in);
 
 	List<Jogador> listJ = null;
@@ -65,8 +66,6 @@ public class Partida {
 	// Falta a linha final
 	public void mostrarMenuInicial() {
 
-		Scanner sc = new Scanner(System.in);
-
 		clearConsole();
 
 		System.out.println("[1] Inicializar Jogo");
@@ -91,8 +90,6 @@ public class Partida {
 		} else {
 			start();
 		}
-
-		sc.close();
 
 	}
 
@@ -144,15 +141,19 @@ public class Partida {
 		// 2/3 - Mostrar menu Personagem Escolher Personagem
 		escolherPersonagem();
 		// 4 - DefinirJogador (quem começa a partida)
+		definirJogador();
 		// 5 - escolherPergunta
 		// 6 - Mostrar Pergunta e alternativas
 		// 7 - Verificar Acerto e Erro
 
 	}
 
+	private void definirJogador() {
+		
+		
+	}
+	
 	private void cadastroJogador() {
-
-		Scanner sc = new Scanner(System.in);
 
 		if (listJ.size() != 0) {
 			listJ.clear();
@@ -160,6 +161,7 @@ public class Partida {
 
 		clearConsole();
 
+		sc.nextLine();
 		for (int i = 1; i < 3; i++) {
 
 			System.out.print(i + "°" + " Jogador escolha seu nick: ");
@@ -183,56 +185,59 @@ public class Partida {
 			System.out.println(jtt);
 		}
 
-		sc.close();
-
 	}
 
 	public void escolherPersonagem() {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		//try {
-			List<Personagem> listTemporaria = Arrays.asList(
 
-					new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
-					new Personagem("Mago"), new Personagem("Silvio Santos")
+		List<Personagem> listTemporaria = Arrays.asList(
 
-			);
+				new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
+				new Personagem("Mago"), new Personagem("Silvio Santos")
 
-			for (int i = 0; i < listJ.size(); i++) {
-				
-				int opcao;
-				
-				System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
+		);
 
-				int cont = 1;
-				for (Personagem pers : listTemporaria) {
+		Integer opcao;
 
-					if (!pers.getStatus()) {
-						System.out.println("[" + cont + "] " + pers.toString()); // Substituir por toString Personagem
-					}
+		sc.nextLine();
+		for (int i = 0; i < listJ.size(); i++) {
 
-					cont++;
+			System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
+
+			int cont = 1;
+			for (Personagem pers : listTemporaria) {
+
+				if (!pers.getStatus()) {
+					System.out.println("[" + cont + "] " + "Nome: " + pers.toString()); // Substituir por toString
+																						// Personagem
 				}
-				
-				opcao = sc.nextInt();			
-				opcao--;	
-				System.out.println(opcao);	
-				
-				listTemporaria.get(opcao).setStatus(true);
-				listJ.get(i).setPersonagem(opcao, listTemporaria);
-			}
-/*
-			for (Jogador j : listJ) {
-				j.toString();
-			}
-    	}
 
-		catch (Exception ex) {
-			System.out.println(ex.getMessage());
+				cont++;
+			}
+
+			do {
+				System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
+				System.out.print("\nEscolha (1 - 5): ");
+				opcao = sc.nextInt();
+				opcao--;
+			} while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
+
+			/*
+			 * do { System.out.
+			 * print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
+			 * System.out.print("\nEscolha (1 - 5): "); opcao = sc.nextInt(); opcao--; }
+			 * while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
+			 * System.out.println(opcao); // Apagar depois
+			 */
+			listTemporaria.get(opcao).setStatus(true);
+			listJ.get(i).setPersonagem(opcao, listTemporaria);
+
 		}
-*/
-			sc.close();
+
+		for (Jogador j : listJ) {
+			System.out.println();
+			System.out.println(j.toString());
+		}
+
 	}
 
 	// Colocar uma lista de Parametro que vai apontar pra essa lista quano esse

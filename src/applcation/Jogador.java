@@ -46,12 +46,10 @@ public class Jogador {
 
 	public void setPersonagem(int opcao, List<Personagem> list) {
 
-		List<Personagem> listTemporaria;
-		listTemporaria = list;
+		List<Personagem> listTemporaria = list;
 		Personagem p = listTemporaria.get(opcao);
 		this.personagem = p; // mesma coisa que this.personagem = Personagem[opcao], caso fosse
 														// um Array do tipo Personagem
-
 	}
 
 	public String toString() {
@@ -59,7 +57,7 @@ public class Jogador {
 		if (personagem == null) {
 			return "Nome - " + getNome();
 		} else {
-			return "Nome - " + getNome() + ", Personagem - " + getPersonagem();
+			return "Jogador - \"" + getNome() + "\", Personagem - " + getPersonagem();
 		}
 
 	}
