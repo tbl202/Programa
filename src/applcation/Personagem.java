@@ -50,10 +50,10 @@ public class Personagem {
 
 	public void setTempoDeVida(Integer tempoDeVida) {
 		this.tempoDeVida = tempoDeVida;
-	}	
-	
+	}
+
 	public void loadHabilidades() {
-		
+
 		List<String> hab = new ArrayList<>();
 
 		hab.add("Força");
@@ -61,13 +61,12 @@ public class Personagem {
 		hab.add("Cura");
 		hab.add("Poison");
 		hab.add("Tempo");
-		
+
 		this.habilidades = hab;
 	}
-	
+
 	public String toString() {
-	return "Nome: " + name 
-		+  ", Habilidades: " + this.habilidades.toString();	
+		return "Nome: " + name + ", Habilidades: " + this.habilidades.toString();
 	}
-	
+
 }

@@ -2,10 +2,8 @@ package applcation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Partida {
 
@@ -177,9 +175,9 @@ public class Partida {
 			listJ.add(new Jogador(nome));
 
 		}
-		
+
 		System.out.println("-------------------");
-		for (Jogador jtt : listJ) {		
+		for (Jogador jtt : listJ) {
 			System.out.printf("Jogadores cadastrados: ");
 			System.out.println(jtt);
 		}
@@ -188,24 +186,12 @@ public class Partida {
 
 	}
 
-	// Método pra verificar se o Nome já está em uso
-/*	public static boolean NomeEmUso(List<Jogador> list, String nome) {
-
-		List<Jogador> result = list.stream().filter(x -> x.getNome() == nome).collect(Collectors.toList());
-
-		if (result.size() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-*/
 	public void escolherPersonagem() {
 
 		Scanner sc = new Scanner(System.in);
+		
 
-		try {
+		//try {
 			List<Personagem> listTemporaria = Arrays.asList(
 
 					new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
@@ -214,6 +200,9 @@ public class Partida {
 			);
 
 			for (int i = 0; i < listJ.size(); i++) {
+				
+				Integer opcao = null;
+				
 				System.out.println("\nPersonagens: ");
 
 				int cont = 1;
@@ -226,18 +215,30 @@ public class Partida {
 					cont++;
 				}
 
-				System.out.print("Jogador: " + listJ.get(i).getNome() + "\nEscolha seu Personagem: ");
-				int opcao = sc.nextInt();
-				opcao--;
+				System.out.print("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
+
+				// LIMPAR O BUFFER DA ERRO E A LINHA 220 (ABAIXO) TMB
+				while(sc.hasNextLine()){
+					opcao = sc.nextInt();	
+				}															
+				opcao--;	
+				
+				System.out.println(opcao);
+/*				
 				listTemporaria.get(opcao).setStatus(true);
 				listJ.get(i).setPersonagem(opcao, listTemporaria);
+*/
 			}
-		}
 
-		catch (Exception ex) {
+	//		for (Jogador j : listJ) {
+	//			j.toString();
+	//		}
+		//}
+
+/*		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-
+*/
 		sc.close();
 
 	}
