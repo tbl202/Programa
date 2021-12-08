@@ -1,6 +1,7 @@
 package applcation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Pergunta {
@@ -20,49 +21,78 @@ public class Pergunta {
 		this.enunciado = enunciado;
 	}
 
-	public List<Alternativa> getAlternativas() {
-		return alternativas;
-	}
-
 	public void setAlternativas(Alternativa a) {
 		alternativas.add(a);
 	}
 
-	public String toString() {
-		return "Pergunta: " + this.enunciado + this.alternativas;
-
-	}
-
 	public void loadPerguntas(List<Pergunta> perguntas) {
 		
-		//Completar com as perguntas
+		perguntas = Arrays.asList (
 		
-		int n = 10;
+		// 1 -
+		criarObjPrgt("Um modelo ________ descreve um banco de dados em termos de tabelas, colunas e junções entre tabelas.", "Relacional", 
+				"Orientado a Objetos", "De rede", "Hierárquico", "Relacional"),
 
+		// 2 -
+		criarObjPrgt("Um(a) ______ é uma coleção de registro", "tabela", "campo", "tabela", "coluna", "linha"),
+		
+		// 3 -
+		criarObjPrgt("Que símbolo é usado para mostrar que um determinado atributo é obrigatório?", "*", "o", "*", "&", "#"),
+		
+		// 4 -
+		criarObjPrgt("Na notação UML, uma técnica que utiliza uma ferramenta que identifica o tipo de interação, \nrepresentado por elipses e os agentes envolvidos, representados por bonecos é conhecida por:", "Diagrama de Casos de Uso", "Diagrama de Contexto", "Diagrama de Entidades", "Diagrama de Casos de Uso", "Diagrama de Fluxo de Dados"),
+		
+		// 5 -
+		criarObjPrgt("Os(as) ___ são usadas para enteder os processos de negócios, bem como a natureza, a função,\ne o escopo de dados.", "regras de negócios", "regras de negócios", "metas", "processos", "declarações de missão"),
+		
+		// 6 -
+		criarObjPrgt("Qual é o princípio pelo qual duas ou mais classes \nderivadas da mesma superclasse podem invocar métodos \nque têm a mesma assinatura, mas comportamentos distintos.", "Polimorfismo", "Herança", "Agregação", "Composição", "Polimorfismo"),
+		
+		// 7 -
+		criarObjPrgt("Um Construtor para uma classe chamada Player em Java seria", "Player()", "Jogador()", "Pessoa()", "Jogador1()", "Player()"),
+		
+		// 8 -
+		criarObjPrgt("Para que os atributos de uma classe Pai possam ser acessados somente por ela mesma \ne as classes que a Herdarem, o modificador de acesso que deve ser usado é:", "Private", "Private", "Public", "Protected", "Static"),
+		
+		// 9 -
+		criarObjPrgt("Uma classe que não é instanciada e apenas fornece um modelo para geração\nde outras classes é denominada", "Classe Abstrata", "Subclasse", "Classe Construtora", "Classe Sobrescritas", "Classe Abstrata"),
+		
+		// 10 -
+		criarObjPrgt("Os quatro pilares do paradigma de Orientação a Objetos são:", "Abstração, Encapsulamento, Herança\ne Polimorfismo.", "Sequenciamento, Procedimentos, Bibliotes e Heranças.", "Herança, Polimorfismo, Classes e Objetos.", "Classes, Atributos, Métodos e Abstração.", "Abstração, Encapsulamento, Herança e Polimorfismo.")
+		
+		);
+
+	}
+	
+	public Pergunta criarObjPrgt(String questao, String resp_C, String a, String b, String c, String d) {
+		
 		Pergunta p = new Pergunta();
-
-		p.setEnunciado("Na orientação a Objetos, o que significa usar private antes de um campo?");
-		Alternativa a = new Alternativa("permite que uma calsse externa acesse diretamente o campo", false);
-		Alternativa b = new Alternativa("permite que uma calsse acesse diretamente o campo", true);
-		p.setAlternativas(a);
-		p.setAlternativas(b);
-
-		Pergunta p1 = new Pergunta();
-
-		p1.setEnunciado("São os princípios da OO, exceto:");
-		Alternativa a1 = new Alternativa("Classe", true);
-		Alternativa b1 = new Alternativa("Abstração", false);
-		Alternativa c1 = new Alternativa("Polimorfismo", false);
-		Alternativa d1 = new Alternativa("Herança", false);
-		p1.setAlternativas(a1);
-		p1.setAlternativas(b1);
-		p1.setAlternativas(c1);
-		p1.setAlternativas(d1);
-
-		for (int i = 0; i < n; i++) {
-			perguntas.add(p);
+		Alternativa[] x = {new Alternativa(a), new Alternativa(b), new Alternativa(c), new Alternativa(d)};
+		
+		p.setEnunciado(questao);
+		
+		for (Alternativa alt : x) {
+			
+			if(alt.getEnunciado().equals(resp_C)) {
+				alt.setStatus(true);
+			}
+			
+			p.setAlternativas(alt);
+			
 		}
-
+		
+		return p;
+		
+	}
+	
+	public String toString() {
+		
+		return "Enunciado: " + getEnunciado() 
+			+  "\n1) " + alternativas.get(0)
+			+  "\n2) " + alternativas.get(1)
+			+  "\n3) " + alternativas.get(2)
+			+  "\n4) " + alternativas.get(3);
+		
 	}
 
 }

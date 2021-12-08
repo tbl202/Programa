@@ -3,11 +3,11 @@ package applcation;
 public class Alternativa {
 
 	private String enunciado;
-	private boolean status;
+	private boolean status; // true certa
 
-	public Alternativa(String enunciado, boolean status) {
+	public Alternativa(String enunciado) {
 		this.enunciado = enunciado;
-		this.status = status;
+		this.status = false;
 	}
 
 	public String getEnunciado() {

@@ -3,6 +3,7 @@ package applcation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Partida {
@@ -20,13 +21,6 @@ public class Partida {
 		this.listJ = new ArrayList<>();
 		this.p = new Pergunta();
 		p.loadPerguntas(perguntas);
-
-	}
-
-	public void mostrarPerguntas() {
-
-		System.out.println("Pergunta: ");
-
 	}
 
 	/*
@@ -112,7 +106,7 @@ public class Partida {
 		mostrarMenuInicial();
 	}
 
-	private void mostrarDesenvolvedores() {
+	public void mostrarDesenvolvedores() {
 
 		int x = 0;
 		while (x != 1) {
@@ -132,28 +126,53 @@ public class Partida {
 		mostrarMenuInicial();
 	}
 
-	private void start() {
+	public void start() {
 		// Metódo que inicia a partida
 		// OBS : ler os comentários acima para mais detalhes
 
 		// 1 - Cadastrar Jogadores
 		cadastroJogador();
 		// 2/3 - Mostrar menu Personagem Escolher Personagem
-		escolherPersonagem();
+		escolherPersonagem(); // dps implementar a seleção do poder aqui
 		// 4 - DefinirJogador (quem começa a partida)
-		definirJogador();
-		// 5 - escolherPergunta
-		// 6 - Mostrar Pergunta e alternativas
+		definirJogador(); // seta o status de um elemento do ListJ pra true
+		// 5/6 - escolherPergunta, Mostrar Pergunta e alternativas
+		mostrarPergunta();				
 		// 7 - Verificar Acerto e Erro
 
+		// o 5/6 e o 7 vao ficar num while que vai ter como verificação olhar se algum dos Jogadores em listJ tem a vida == 0
 	}
 
-	private void definirJogador() {
+	public void mostrarPergunta() {
 		
 		
+		try {		
+			Random random = new Random();
+			int numero = this.perguntas.size();
+			
+			System.out.println("\nNumero: " + numero);
+			Pergunta p = this.perguntas.get(random.nextInt(numero));
+			
+			p.toString();
+		} catch (IllegalArgumentException ex) {
+			String errMsg = ex.getMessage();
+			System.out.println(errMsg);
+		} catch (IndexOutOfBoundsException ex) {
+			String errMsg = ex.getMessage();
+			System.out.println(errMsg);
+		}
 	}
-	
-	private void cadastroJogador() {
+
+	public void definirJogador() {
+
+		Random random = new Random();
+
+		// Jogador do index numero começa, seu status foi mudado para true;
+		listJ.get(random.nextInt(1)).setStatus(true);
+
+	}
+
+	public void cadastroJogador() {
 
 		if (listJ.size() != 0) {
 			listJ.clear();

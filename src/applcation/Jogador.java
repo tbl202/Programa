@@ -7,6 +7,7 @@ public class Jogador {
 
 	private String nome;
 	private Personagem personagem;
+	private boolean status = false; // true é sua vez de jogar
 
 	public Jogador() {
 	}
@@ -25,6 +26,14 @@ public class Jogador {
 
 	public Personagem getPersonagem() {
 		return personagem;
+	}	
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	@Override
@@ -46,10 +55,8 @@ public class Jogador {
 
 	public void setPersonagem(int opcao, List<Personagem> list) {
 
-		List<Personagem> listTemporaria = list;
-		Personagem p = listTemporaria.get(opcao);
-		this.personagem = p; // mesma coisa que this.personagem = Personagem[opcao], caso fosse
-														// um Array do tipo Personagem
+		this.personagem = list.get(opcao);
+
 	}
 
 	public String toString() {
