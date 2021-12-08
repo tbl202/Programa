@@ -1,5 +1,6 @@
 package applcation;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -187,10 +188,9 @@ public class Partida {
 	}
 
 	public void escolherPersonagem() {
-
+		
 		Scanner sc = new Scanner(System.in);
 		
-
 		//try {
 			List<Personagem> listTemporaria = Arrays.asList(
 
@@ -201,9 +201,9 @@ public class Partida {
 
 			for (int i = 0; i < listJ.size(); i++) {
 				
-				Integer opcao = null;
+				int opcao;
 				
-				System.out.println("\nPersonagens: ");
+				System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
 
 				int cont = 1;
 				for (Personagem pers : listTemporaria) {
@@ -214,33 +214,25 @@ public class Partida {
 
 					cont++;
 				}
-
-				System.out.print("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
-
-				// LIMPAR O BUFFER DA ERRO E A LINHA 220 (ABAIXO) TMB
-				while(sc.hasNextLine()){
-					opcao = sc.nextInt();	
-				}															
-				opcao--;	
 				
-				System.out.println(opcao);
-/*				
+				opcao = sc.nextInt();			
+				opcao--;	
+				System.out.println(opcao);	
+				
 				listTemporaria.get(opcao).setStatus(true);
 				listJ.get(i).setPersonagem(opcao, listTemporaria);
-*/
 			}
+/*
+			for (Jogador j : listJ) {
+				j.toString();
+			}
+    	}
 
-	//		for (Jogador j : listJ) {
-	//			j.toString();
-	//		}
-		//}
-
-/*		catch (Exception ex) {
+		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 */
-		sc.close();
-
+			sc.close();
 	}
 
 	// Colocar uma lista de Parametro que vai apontar pra essa lista quano esse
