@@ -8,6 +8,11 @@ public class Alternativa {
 	public Alternativa(String enunciado) {
 		this.enunciado = enunciado;
 		this.status = false;
+	}		
+
+	public Alternativa(String enunciado, boolean status) {
+		this.enunciado = enunciado;
+		this.status = status;
 	}
 
 	public String getEnunciado() {
@@ -27,7 +32,6 @@ public class Alternativa {
 	}
 
 	public String toString() {
-		return this.enunciado + "\n";
-
+		return this.enunciado;
 	}
 }
