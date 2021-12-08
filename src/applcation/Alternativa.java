@@ -26,8 +26,6 @@ public class Alternativa {
 		this.status = status;
 	}
 
-	// craiar metodo toString
-
 	public String toString() {
 		return this.enunciado + "\n";
 

@@ -1,11 +1,12 @@
 package applcation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pergunta {
 
 	private String enunciado;
-	private ArrayList<Alternativa> alternativas;
+	private List<Alternativa> alternativas;
 
 	public Pergunta() {
 		this.alternativas = new ArrayList<>();
@@ -19,7 +20,7 @@ public class Pergunta {
 		this.enunciado = enunciado;
 	}
 
-	public ArrayList<Alternativa> getAlternativas() {
+	public List<Alternativa> getAlternativas() {
 		return alternativas;
 	}
 
@@ -32,8 +33,11 @@ public class Pergunta {
 
 	}
 
-	public void loadPerguntas(ArrayList<Pergunta> perguntas) {
-		int n = 2;
+	public void loadPerguntas(List<Pergunta> perguntas) {
+		
+		//Completar com as perguntas
+		
+		int n = 10;
 
 		Pergunta p = new Pergunta();
 

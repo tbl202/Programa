@@ -1,19 +1,20 @@
 package applcation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Personagem {
 
 	private String name;
-	private ArrayList<String> habilidades;
+	private List<String> habilidades;
 	// false ñ escolhido
 	// true escolhido
 	private boolean status;
-	private int tempoDeVida;
+	private Integer tempoDeVida;
 
-	public Personagem(String name, ArrayList<String> habilidades) {
+	public Personagem(String name) {
 		this.name = name;
-		this.habilidades = habilidades;
+		loadHabilidades();
 		this.status = false;
 		this.tempoDeVida = 100;
 	}
@@ -26,11 +27,12 @@ public class Personagem {
 		this.name = name;
 	}
 
-	public ArrayList<String> getHabilidades() {
+	// Metódo que vai me dar a ação da habilidades com if
+	public List<String> getHabilidades() {
 		return habilidades;
 	}
 
-	public void setHabilidades(ArrayList<String> habilidades) {
+	public void setHabilidades(List<String> habilidades) {
 		this.habilidades = habilidades;
 	}
 
@@ -42,12 +44,30 @@ public class Personagem {
 		this.status = status;
 	}
 
-	public int getTempoDeVida() {
+	public Integer getTempoDeVida() {
 		return tempoDeVida;
 	}
 
-	public void setTempoDeVida(int tempoDeVida) {
+	public void setTempoDeVida(Integer tempoDeVida) {
 		this.tempoDeVida = tempoDeVida;
-	}
+	}	
+	
+	public void loadHabilidades() {
+		
+		List<String> hab = new ArrayList<>();
 
+		hab.add("Força");
+		hab.add("Velocidade");
+		hab.add("Cura");
+		hab.add("Poison");
+		hab.add("Tempo");
+		
+		this.habilidades = hab;
+	}
+	
+	public String toString() {
+	return "Nome: " + name 
+		+  ", Habilidades: " + this.habilidades.toString();	
+	}
+	
 }
