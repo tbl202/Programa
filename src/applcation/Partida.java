@@ -32,6 +32,7 @@ public class Partida {
 		clearConsole();
 
 		try {
+			System.out.println("---WELCOME to SQUEEZY QUEST's---");
 			System.out.println("[1] Inicializar Jogo");
 			System.out.println("[2] Desenvolvedor");
 			System.out.println("[3] Explicação do Jogo");
@@ -144,16 +145,22 @@ public class Partida {
 		escolherHabilidade();
 		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
 		jogadorComecaPartida();
-		// 5 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
+		//5 - RANDOMIZAR A PERGUNTA CONTIDA NA LISTA E SETAR A PERGUNTA P REFERENCIANDO ELA
+		randomPergunta();
+		
 		do {
+			
+			// 6 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
 			mostrarPergunta();
-			// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
+			// 7 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
 			respostaJogador();
-			// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
+			// 8 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
 			trocarTurno();
-			// 8 - VERIFICAR SE A PARTIDA ACABOU
+			// 9 - VERIFICAR SE A PARTIDA ACABOU
 			endPartida();
+			
 		} while (winner == null);
+		
 	}
 
 	public void trocarTurno() {
@@ -200,12 +207,24 @@ public class Partida {
 
 	public void respostaJogador() {
 		try {
+			
+			// DA A OPCAO DO JOGADOR DECIDIR USAR O PODER
+			
 			// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
 			// PERSONAGEM
 			System.out.println();
 			System.out.printf("Resposta: ");
 			int opcao = sc.nextInt();
 			opcao--;
+			
+			System.out.println("Você tem certeza da sua resposta? (s/n)? ");
+			char confirmacao = sc.next().charAt(0);
+			
+			if(confirmacao == 'n') {
+				
+				mostrarPergunta();
+				
+			} 
 
 			System.out.println();
 			// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
@@ -291,16 +310,21 @@ public class Partida {
 
 	}
 
-	public void mostrarPergunta() {
-
+	public void randomPergunta() {
+		
 		// RANDOMIZA UMA PERGUNTA CONTIDA NA LISTA PERGUNTAS E SETA A PERGUNTA P (VAZIA
 		// NO 1 MOMENTO)
 		// PRA REFERENCIAR ESSA PERGUNTA DENTRO DO ARRAY
-		// PRINTA ESSA PERGUNTA NO CONSOLE
 		clearConsole();
 
 		Random random = new Random();
 		this.p = this.perguntas.get(random.nextInt(perguntas.size()));
+		
+	}
+	
+	public void mostrarPergunta() {
+
+		//PRINTA A PERGUNTA p NO CONSOLE
 		System.out.println();
 
 		// INFORMA A QUAL JOGADOR A PERGUNTA SE DESTINA
@@ -308,7 +332,7 @@ public class Partida {
 
 			if (jogador.getStatus() == true) {
 
-				System.out.println("Jogador da vez: " + jogador.getNome());
+				System.out.println("Jogador da vez: " + jogador.getNome() + " (" + jogador.getPersonagem().getVida() + "% de vida) ");
 
 			}
 
@@ -465,11 +489,13 @@ public class Partida {
 	public void escolherHabilidade() {
 
 		try {
+			
 			// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
 			for (int i = 0; i < listJ.size(); i++) {
 
 				clearConsole();
-				// MOSTRA AS OPCOES DISPONIVEIS
+				
+				// MOSTRA AS OPCOES DE HABILIDADES DISPONIVEIS PARA ESCOLHA
 				System.out.println(listJ.get(i).getPersonagem().toStringH());
 				System.out.println();
 				System.out.print("Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");

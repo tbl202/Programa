@@ -50,7 +50,7 @@ public class Personagem {
 	}
 
 	public void setVida(Integer vida) {
-		
+		// USADO NO RESPOSTAJOGADOR() DENTRO DE PARTIDA
 		// SUBTRAI A VIDA ATUAL PELA QUANTIDADE PASSADA (25)
 		this.vida -= vida;
 	}
@@ -73,7 +73,7 @@ public class Personagem {
 	public void loadHabilidades() {
 
 		// ADICIONA AS HABILIDADES NA LISTA
-		habilidades = Arrays.asList("Força: Caso acerte a questão ", "Velocidade", "Cura", "Poison", "Tempo");
+		habilidades = Arrays.asList("Espelho", "Joker", "Cura", "Shield", "Time Skip");
 
 	}
 
