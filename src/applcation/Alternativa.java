@@ -2,29 +2,29 @@ package applcation;
 
 public class Alternativa {
 
-	private String enunciado;
+	private String resposta;
 	private boolean status; // true certa
 
-	public Alternativa(String enunciado) {
-		this.enunciado = enunciado;
+	public Alternativa(String resposta) {
+		this.resposta = resposta;
 		this.status = false;
 	}		
 
-	public Alternativa(String enunciado, boolean status) {
-		this.enunciado = enunciado;
+	public Alternativa(String resposta, boolean status) {
+		this.resposta = resposta;
 		this.status = status;
 	}
 
-	public String getEnunciado() {
-		return enunciado;
+	public String getResposta() {
+		return resposta;
 	}
 
 	public boolean getStatus() {
 		return status;
 	}
 
-	public void setEnunciado(String enunciado) {
-		this.enunciado = enunciado;
+	public void setResposta(String resposta) {
+		this.resposta = resposta;
 	}
 
 	public void setStatus(boolean status) {
@@ -32,6 +32,6 @@ public class Alternativa {
 	}
 
 	public String toString() {
-		return this.enunciado;
+		return this.resposta;
 	}
 }

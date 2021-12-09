@@ -1,6 +1,6 @@
 package applcation;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Personagem {
@@ -10,13 +10,13 @@ public class Personagem {
 	// false ñ escolhido
 	// true escolhido
 	private boolean status;
-	private Integer tempoDeVida;
+	private Integer vida;
 
 	public Personagem(String name) {
 		this.name = name;
 		loadHabilidades();
 		this.status = false;
-		this.tempoDeVida = 100;
+		this.vida = 100;
 	}
 
 	public String getName() {
@@ -44,32 +44,34 @@ public class Personagem {
 		this.status = status;
 	}
 
-	public Integer getTempoDeVida() {
-		return tempoDeVida;
+	public Integer getVida() {
+		return vida;
 	}
 
-	public void setTempoDeVida(Integer tempoDeVida) {
-		this.tempoDeVida = tempoDeVida;
+	public void setVida(Integer vida) {
+		this.vida = vida;
 	}
 
 	public void loadHabilidades() {
 
-		List<String> hab = new ArrayList<>();
-
-		hab.add("Força");
-		hab.add("Velocidade");
-		hab.add("Cura");
-		hab.add("Poison");
-		hab.add("Tempo");
+		List<String> hab = Arrays.asList(
+				"Força", "Velocidade", "Cura", "Poison", "Tempo"
+				);				
 
 		this.habilidades = hab;
 	}
 
 	public String toString() {
-		if (this.habilidades == null) {
+		if (habilidades == null) {
 			return name;
 		} else {
-			return name + ", Habilidades: " + this.habilidades.toString();
+			return name + ", Habilidades: " + habilidades.get(0) + ", " + habilidades.get(1) 
+			+ ", " + habilidades.get(2) + ", " + habilidades.get(3) + ", " + habilidades.get(4) ;
+			
+			
+			
+			
+			
 		}
 	}
 

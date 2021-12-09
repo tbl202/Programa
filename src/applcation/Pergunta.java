@@ -43,9 +43,9 @@ public class Pergunta {
 
 	}
 
-	public List<Pergunta> loadPerguntas(List<Pergunta> perguntas) {
+	public List<Pergunta> loadPerguntas() {
 
-		perguntas = Arrays.asList(
+		List<Pergunta> perguntas = Arrays.asList(
 
 				// 1 -
 				criarObjPrgt(
@@ -91,7 +91,7 @@ public class Pergunta {
 
 				// 10 -
 				criarObjPrgt("Os quatro pilares do paradigma de Orientação a Objetos são:",
-						"Abstração, Encapsulamento, Herança\ne Polimorfismo.",
+						"Abstração, Encapsulamento, Herança e Polimorfismo.",
 						"Sequenciamento, Procedimentos, Bibliotes e Heranças.",
 						"Herança, Polimorfismo, Classes e Objetos.", "Classes, Atributos, Métodos e Abstração.",
 						"Abstração, Encapsulamento, Herança e Polimorfismo.")

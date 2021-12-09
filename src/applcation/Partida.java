@@ -20,7 +20,7 @@ public class Partida {
 		this.perguntas = new ArrayList<>();
 		this.listJ = new ArrayList<>();
 		this.p = new Pergunta();
-		perguntas = p.loadPerguntas(perguntas);
+		perguntas = p.loadPerguntas();
 	}
 
 	/*
@@ -137,38 +137,29 @@ public class Partida {
 		// 4 - DefinirJogador (quem começa a partida)
 		definirJogador(); // seta o status de um elemento do ListJ pra true
 		// 5/6 - escolherPergunta, Mostrar Pergunta e alternativas
-		mostrarPergunta();				
+		p = mostrarPergunta();
 		// 7 - Verificar Acerto e Erro
 
-		// o 5/6 e o 7 vao ficar num while que vai ter como verificação olhar se algum dos Jogadores em listJ tem a vida == 0
+		// o 5/6 e o 7 vao ficar num while que vai ter como verificação olhar se algum
+		// dos Jogadores em listJ tem a vida == 0
 	}
 
-	public void mostrarPergunta() {
-		
-		
-		try {		
-			Random random = new Random();
-			int numero = this.perguntas.size();
-			
-			System.out.println("\nNumero: " + numero);
-			Pergunta p = this.perguntas.get(random.nextInt(numero));
-			
-			p.toString();
-		} catch (IllegalArgumentException ex) {
-			String errMsg = ex.getMessage();
-			System.out.println(errMsg);
-		} catch (IndexOutOfBoundsException ex) {
-			String errMsg = ex.getMessage();
-			System.out.println(errMsg);
-		}
+	public Pergunta mostrarPergunta() {
+
+		Random random = new Random();
+		Pergunta p = this.perguntas.get(random.nextInt(perguntas.size()));
+		p.toString();
+		return p;
+
 	}
 
 	public void definirJogador() {
 
+		// RANDOZIMA UM JOGADOR NA LISTJ, E TORNA SEU STATUS = TRUE
+		// PERSONAGENS COM STATUS = TRUE ESTAO NA VEZ DE JOGAR
 		Random random = new Random();
 
-		// Jogador do index numero começa, seu status foi mudado para true;
-		listJ.get(random.nextInt(1)).setStatus(true);
+		listJ.get(random.nextInt(listJ.size())).setStatus(true);
 
 	}
 
@@ -178,36 +169,57 @@ public class Partida {
 			listJ.clear();
 		}
 
-		clearConsole();
+		// clearConsole();
 
-		sc.nextLine();
+		sc.nextLine(); // Limpar buffer
+
 		for (int i = 1; i < 3; i++) {
 
-			System.out.print(i + "°" + " Jogador escolha seu nick: ");
+			System.out.print(i + "°" + " Jogador escolha seu nome: ");
 			String nome = sc.nextLine();
-			Jogador jt = new Jogador(nome);
 
-			while (listJ.contains(jt)) {
-				System.out.println("O nome já está em uso. Tente outra vez: ");
-				System.out.print(i + "°" + " Jogador escolha seu nick: ");
+			// METODO PRA VERIFICAR SE O NOME ESCOLHIDO JA ESTÁ EM USO
+			while (isExist(listJ, nome)) {
+				System.out.printf("\nNome já em uso. Tente outro: ");
 				nome = sc.nextLine();
-				jt = new Jogador(nome);
 			}
 
+			// ADICIONA UM JOGADOR NA LISTAJ COM O NOME ESCOLHIDO
 			listJ.add(new Jogador(nome));
 
 		}
 
 		System.out.println("-------------------");
-		for (Jogador jtt : listJ) {
-			System.out.printf("Jogadores cadastrados: ");
-			System.out.println(jtt);
+
+		for (Jogador jgd : listJ) {
+			System.out.printf("\nJogadores cadastrados: " + jgd);
 		}
 
 	}
 
+	public static boolean isExist(List<Jogador> list, String nome) {
+
+		boolean result = false;
+
+		for (Jogador jogador : list) {
+
+			// COMPARA O NOME NA LISTA COM O NOME PASSADO, FUNCIONA PQ TA EM UM FOREACH
+			if (jogador.getNome().equals(nome)) {
+				result = true;
+			}
+
+		}
+
+		// TRUE - NOME EM USO, FALSE - NOME DISPONIVEL
+		return result;
+
+	}
+
+	// ESSE METÓDO SÓ FUNCIONA SE EXECUTADO DEPOIS DO CADASTRO JOGADOR FOR
+	// COMPLETADO
 	public void escolherPersonagem() {
 
+		// CRIA UMA LISTA PERSONAGEM QUE VAI SER USADA SOMENTE NESSE METÓDO
 		List<Personagem> listTemporaria = Arrays.asList(
 
 				new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
@@ -217,7 +229,8 @@ public class Partida {
 
 		Integer opcao;
 
-		sc.nextLine();
+		sc.nextLine(); // LIMPAR BUFFER
+
 		for (int i = 0; i < listJ.size(); i++) {
 
 			System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
@@ -225,47 +238,51 @@ public class Partida {
 			int cont = 1;
 			for (Personagem pers : listTemporaria) {
 
+				// PERSONAGEM COM STATUS = TRUE FORAM SELECIONADOS, ESSE IF SÓ MOSTRA
+				// PERSONAGENS NA LISTA
+				// COM STATUS = FALSE (DISPONIVEL)
 				if (!pers.getStatus()) {
-					System.out.println("[" + cont + "] " + "Nome: " + pers.toString()); // Substituir por toString
-																						// Personagem
+					System.out.println("[" + cont + "] " + "Nome: " + pers.toString());
+
 				}
 
 				cont++;
+
 			}
 
+			// COMO Ñ CONSEGUI REMOVER O PERSONAGEM DA LISTA PERSONAGEM ESSE DO/WHILE
+			// GARANTE QUE UM PERSONAGEM QUE TEM O STATUS TRUE NÃO APAREÇA
+			// E IMPEDE O USUÁRIO DE SELECIONALO COM A 3 CONDICAO
 			do {
+
 				System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
 				System.out.print("\nEscolha (1 - 5): ");
 				opcao = sc.nextInt();
 				opcao--;
+
 			} while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
 
-			/*
-			 * do { System.out.
-			 * print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
-			 * System.out.print("\nEscolha (1 - 5): "); opcao = sc.nextInt(); opcao--; }
-			 * while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
-			 * System.out.println(opcao); // Apagar depois
-			 */
 			listTemporaria.get(opcao).setStatus(true);
 			listJ.get(i).setPersonagem(opcao, listTemporaria);
 
 		}
 
+		// APRESENTA NO CONSOLE OS JOGADORES CADASTRADOS COM SEU PERSONAGEM
+		// OBS: (ADD SELEÇÃO DE PODER)
 		for (Jogador j : listJ) {
+
 			System.out.println();
 			System.out.println(j.toString());
+
 		}
 
 	}
 
-	// Colocar uma lista de Parametro que vai apontar pra essa lista quano esse
-	// método fechar
-	// A Lista p será utilizada no metódo escolherPersonagem
-
 	// Metodo pra deixar o console Clear
 	public final static void clearConsole() {
+
 		for (int i = 0; i < 15; ++i) {
+
 			System.out.println();
 		}
 	}
