@@ -2,6 +2,7 @@ package applcation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -61,70 +62,101 @@ public class Partida {
 
 		clearConsole();
 
-		System.out.println("[1] Inicializar Jogo");
-		System.out.println("[2] Desenvolvedor");
-		System.out.println("[3] Explicação do Jogo");
-		System.out.println("[4] Sair");
-		System.out.print("Informe sua escolha: ");
-		int opcao = sc.nextInt();
-
-		while (opcao > 4 || opcao < 1) {
-			System.out.println("Dados invalidos. Tente outra vez.");
+		try {
+			System.out.println("[1] Inicializar Jogo");
+			System.out.println("[2] Desenvolvedor");
+			System.out.println("[3] Explicação do Jogo");
+			System.out.println("[4] Sair");
 			System.out.print("Informe sua escolha: ");
-			opcao = sc.nextInt();
-		}
+			int opcao = sc.nextInt();
 
-		if (opcao == 3) {
-			explicacaoJogo();
-		} else if (opcao == 2) {
-			mostrarDesenvolvedores();
-		} else if (opcao == 4) {
-			System.exit(0);
-		} else {
-			start();
-		}
+			while (opcao > 4 || opcao < 1) {
+				System.out.println("Dados invalidos. Tente outra vez.");
+				System.out.print("Informe sua escolha: ");
+				opcao = sc.nextInt();
+			}
 
+			if (opcao == 3) {
+				explicacaoJogo();
+			} else if (opcao == 2) {
+				mostrarDesenvolvedores();
+			} else if (opcao == 4) {
+				System.exit(0);
+			} else {
+				start();
+			}
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			sc.nextLine();
+
+			mostrarMenuInicial();
+
+		}
 	}
 
-	private void explicacaoJogo() {
+	public void explicacaoJogo() {
 
 		int x = 0;
-		while (x != 1) {
 
-			clearConsole();
+		clearConsole();
 
-			System.out.println(
-					"O Jogo é um quiz, no qual 2 jogadores jogarão alternando seu turno, acertando ou errando as perguntas");
-			System.out.println(
-					"Você possuiu habilidades, no entanto, só pode escolher 1 pra usar durante a partida.\nApós isso, não terá mais nenhuma habilidade pro resto do jogo ");
-			System.out.println("Perde quem Zerar (0) a vida primeiro");
-			System.out.println("[1] Voltar");
-			System.out.print("Escolha: ");
+		System.out.print("O Jogo é um quiz, no qual 2 jogadores jogarão alternando seu turno a todo momento"
+				+ "\nO acerto ou erro da resposta não mudará isso."
+				+ "\nCada Jogador terá que escolher qual Personagem deseja jogar"
+				+ "\nIndependente do Personagem escolhido, o Jogador não receberá nenhum bonus por isso"
+				+ "\nAlém da escolha dos Personagens, o Jogador também escolherá com qual habilidade deseja jogar"
+				+ "\nDependendo da habilidade escolhida você poderá aplicar suas respectivas ação" + "\n"
+				+ "\nNesse jogo, o Jogador ganha quando a vida do adversário chegar a zero - 0" + "\n");
 
-			x = sc.nextInt();
+		try {
+			do {
+				System.out.print("\nPara voltar digite 1: ");
+				x = sc.nextInt();
+			} while (x != 1);
+
+			mostrarMenuInicial();
+
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			sc.nextLine();
+
+			explicacaoJogo();
+
 		}
 
-		mostrarMenuInicial();
 	}
 
 	public void mostrarDesenvolvedores() {
+		try {
 
-		int x = 0;
-		while (x != 1) {
-			clearConsole();
+			int x;
+			do {
+				clearConsole();
 
-			System.out.println("Desenvolvedores: ");
-			System.out.println(". Arthur Gabriel Fernandes de Oliveira");
-			System.out.println(". Arthur Latini");
-			System.out.println(". Danilo Jorge da Silva");
-			System.out.println(". Renato Henrique Lopes da Silva");
-			System.out.println("[1] Voltar");
-			System.out.print("Escolha: ");
+				System.out.println("Desenvolvedores: ");
+				System.out.println(". Arthur Gabriel Fernandes de Oliveira");
+				System.out.println(". Arthur Latini");
+				System.out.println(". Danilo Jorge da Silva");
+				System.out.println(". Renato Henrique Lopes da Silva");
+				System.out.print("Para voltar digite 1: ");
 
-			x = sc.nextInt();
+				x = sc.nextInt();
+
+			} while (x != 1);
+
+			mostrarMenuInicial();
+
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			sc.nextLine();
+
+			mostrarDesenvolvedores();
+
 		}
 
-		mostrarMenuInicial();
 	}
 
 	public void start() {
@@ -134,39 +166,108 @@ public class Partida {
 		// 1 - Cadastrar Jogadores
 		cadastroJogador();
 		// 2/3 - ESCOLHER O PERSONAGEM E PODER
-		escolherPersonagem(); 
+		escolherPersonagem();
 		escolherHabilidade();
 		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
-		jogadorComecaPartida(); 
+		jogadorComecaPartida();
 		// 5 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
 		mostrarPergunta();
 		// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
-		respostaJogador();		
-		// 7 - VERIFICAR SE A PARTIDA ACABOU
+		respostaJogador();
+		// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
+		trocarTurno();
+		// trocarTurno();
+		// 8 - VERIFICAR SE A PARTIDA ACABOU
 		endPartida();
-		
-		//5, 6 e 7 colocar dentro de do while
+
+		// 5, 6 e 7 colocar dentro de do while
 	}
 
-	private void respostaJogador() {
-		// TODO Auto-generated method stub
+	public void trocarTurno() {
+		
+		// TROCA OS STATUS DOS JOGADORES CONTIDOS NA LISTAJ
+		
+		for (int i = 0; i < listJ.size(); i++) {
+			
+			
+			
+		}
+		
 		
 	}
 
-	private void endPartida() {
-		
+	public void respostaJogador() {
+
+		// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
+		// PERSONAGEM
+		System.out.println();
+		System.out.printf("Resposta: ");
+		int opcao = sc.nextInt();
+		opcao--;
+
+		System.out.println();
+		// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
+		if (p.getAlternativas().get(opcao).getStatus() == true) {
+
+			System.out.println("Você acertou!");
+
+		}
+
+		else {
+
+			System.out.println("BUUU! Infelizmente você errou");
+
+			for (int i = 0; i < listJ.size(); i++) {
+
+				// VERIFICA SE O STATUS DO JOGADOR É TRUE
+				if (listJ.get(i).getStatus() == true) {
+
+					// SUBTRAI A VIDA DO PERSONAGEM POR 25
+					listJ.get(i).getPersonagem().setVida(25);
+
+				}
+
+			}
+
+		}
+
+		//
+
+	}
+
+	public void endPartida() {
+
 		// UMA PARTIDA ACABA QUANDO A VIDA DO PERSONAGEM DE UM JOGADOR CHEGAR A ZERO
-		
+
 	}
 
-	public Pergunta mostrarPergunta() {
+	public void mostrarPergunta() {
 
-		// RANDOMIZA UMA PERGUNTA CONTIDA NA LISTA PERGUNTAS E SETA A PERGUNTA P (VAZIA NO 1 MOMENTO)
+		// RANDOMIZA UMA PERGUNTA CONTIDA NA LISTA PERGUNTAS E SETA A PERGUNTA P (VAZIA
+		// NO 1 MOMENTO)
 		// PRA REFERENCIAR ESSA PERGUNTA DENTRO DO ARRAY
+		// PRINTA ESSA PERGUNTA NO CONSOLE
+		clearConsole();
+
 		Random random = new Random();
 		this.p = this.perguntas.get(random.nextInt(perguntas.size()));
-		this.p.toString();
-		return this.p;
+		System.out.println();
+
+		// INFORMA A QUAL JOGADOR A PERGUNTA SE DESTINA
+		for (Jogador jogador : listJ) {
+
+			if (jogador.getStatus() == true) {
+
+				System.out.println("Jogador da vez: " + jogador.getNome());
+
+			}
+
+		}
+		
+		System.out.println();
+		
+		// PRINTA A PERGUNTA NA TELA
+		System.out.println(this.p.toString());
 
 	}
 
@@ -300,14 +401,20 @@ public class Partida {
 		// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
 		for (int i = 0; i < listJ.size(); i++) {
 
+			clearConsole();
 			// MOSTRA AS OPCOES DISPONIVEIS
-			System.out.println("Jogador " + listJ.get(i).getNome() + "escolha uma habilidade entre os seguintes:");
-			listJ.get(i).getPersonagem().toStringH();
+			System.out.println("Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre os seguintes:");
+			System.out.println(listJ.get(i).getPersonagem().toStringH());
+			System.out.println();
+			System.out.printf("Escolha: ");
 
 			// SELECIONA A HABILIDADE
 			// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
-			// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM
+			// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
 			int opcao = sc.nextInt();
+
+			System.out.println(listJ.get(i).getPersonagem().toString());
+
 			listJ.get(i).getPersonagem().setHabilidade(opcao);
 
 		}

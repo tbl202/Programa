@@ -61,18 +61,18 @@ public class Pergunta {
 
 				// 4 -
 				criarObjPrgt(
-						"Na notação UML, uma técnica que utiliza uma ferramenta que identifica o tipo de interação, \nrepresentado por elipses e os agentes envolvidos, representados por bonecos é conhecida por:",
+						"Na notação UML, uma técnica (modelagem) que utiliza uma ferramenta que identifica o tipo de interação\n entre os envolvido com elipses (ação), retas e agentes (pessoa/stick) envolvidos é conhecida por:",
 						"Diagrama de Casos de Uso", "Diagrama de Contexto", "Diagrama de Entidades",
 						"Diagrama de Casos de Uso", "Diagrama de Fluxo de Dados"),
 
 				// 5 -
 				criarObjPrgt(
-						"Os(as) ___ são usadas para enteder os processos de negócios, bem como a natureza, a função,\ne o escopo de dados.",
+						"Os(as) ___ são usadas(os) para enteder os processos de negócios, bem como\n a sua natureza, a função, e o escopo de dados.",
 						"regras de negócios", "regras de negócios", "metas", "processos", "declarações de missão"),
 
 				// 6 -
 				criarObjPrgt(
-						"Qual é o princípio pelo qual duas ou mais classes \nderivadas da mesma superclasse podem invocar métodos \nque têm a mesma assinatura, mas comportamentos distintos.",
+						"Qual é o princípio pelo qual duas ou mais classes derivadas da mesma superclasse \npodem invocar métodos que têm a mesma assinatura, mas comportamentos distintos.",
 						"Polimorfismo", "Herança", "Agregação", "Composição", "Polimorfismo"),
 
 				// 7 -
@@ -81,12 +81,12 @@ public class Pergunta {
 
 				// 8 -
 				criarObjPrgt(
-						"Para que os atributos de uma classe Pai possam ser acessados somente por ela mesma \ne as classes que a Herdarem, o modificador de acesso que deve ser usado é:",
+						"Para que os atributos de uma classe somente sejam acessadas por ela mesma \ne e suas classes filha, o modificador de acesso que deve ser usado é:",
 						"Private", "Private", "Public", "Protected", "Static"),
 
 				// 9 -
 				criarObjPrgt(
-						"Uma classe que não é instanciada e apenas fornece um modelo para geração\nde outras classes é denominada",
+						"Uma classe que não é instanciada e apenas fornece um modelo para geraçãode outras classes é denominada",
 						"Classe Abstrata", "Subclasse", "Classe Construtora", "Classe Sobrescritas", "Classe Abstrata"),
 
 				// 10 -

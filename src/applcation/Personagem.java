@@ -50,12 +50,15 @@ public class Personagem {
 	}
 
 	public void setVida(Integer vida) {
-		this.vida = vida;
+		
+		// SUBTRAI A VIDA ATUAL PELA QUANTIDADE PASSADA (25)
+		this.vida -= vida;
 	}
 	
 	public String getHabilidade() {		
 		return habilidade;		
 	}
+	
 
 	public void setHabilidade(int opcao) {
 
@@ -63,9 +66,9 @@ public class Personagem {
 		// VAI DELETAR A LISTA HABILIDADES NO SEU FINAL PRA TER SOMENTE 1 HABILIDADE
 		// PERTENCENTE AO PERSONAGEM
 		opcao--;
+		System.out.println(habilidades.get(opcao).toString());
 		this.habilidade = habilidades.get(opcao);
-		habilidades.clear();
-
+		
 	}
 	
 	public void loadHabilidades() {
