@@ -20,7 +20,7 @@ public class Partida {
 		this.perguntas = new ArrayList<>();
 		this.listJ = new ArrayList<>();
 		this.p = new Pergunta();
-		p.loadPerguntas(perguntas);
+		perguntas = p.loadPerguntas(perguntas);
 	}
 
 	/*

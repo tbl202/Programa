@@ -43,7 +43,7 @@ public class Pergunta {
 
 	}
 
-	public void loadPerguntas(List<Pergunta> perguntas) {
+	public List<Pergunta> loadPerguntas(List<Pergunta> perguntas) {
 
 		perguntas = Arrays.asList(
 
@@ -97,6 +97,8 @@ public class Pergunta {
 						"Abstração, Encapsulamento, Herança e Polimorfismo.")
 
 		);
+		
+		return perguntas;
 
 	}
 
