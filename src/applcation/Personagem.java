@@ -11,6 +11,7 @@ public class Personagem {
 	// true escolhido
 	private boolean status;
 	private Integer vida;
+	private String habilidade;
 
 	public Personagem(String name) {
 		this.name = name;
@@ -51,28 +52,46 @@ public class Personagem {
 	public void setVida(Integer vida) {
 		this.vida = vida;
 	}
+	
+	public String getHabilidade() {		
+		return habilidade;		
+	}
 
+	public void setHabilidade(int opcao) {
+
+		// METODO PRA ESCOLHER A HABILIDADE QUE VAI SER PERTINENTE AO PERSONAGEM
+		// VAI DELETAR A LISTA HABILIDADES NO SEU FINAL PRA TER SOMENTE 1 HABILIDADE
+		// PERTENCENTE AO PERSONAGEM
+		opcao--;
+		this.habilidade = habilidades.get(opcao);
+		habilidades.clear();
+
+	}
+	
 	public void loadHabilidades() {
 
-		List<String> hab = Arrays.asList(
-				"Força", "Velocidade", "Cura", "Poison", "Tempo"
-				);				
+		// ADICIONA AS HABILIDADES NA LISTA
+		habilidades = Arrays.asList("Força: Caso acerte a questão ", "Velocidade", "Cura", "Poison", "Tempo");
 
-		this.habilidades = hab;
+	}
+
+	public String toStringH() {
+
+		return "---Habilidades---" + "\n[1]  " + habilidades.get(0) + "\n[2]  " + habilidades.get(1) + "\n[3]  "
+				+ habilidades.get(2) + "\n[4]  " + habilidades.get(3) + "\n[5]  " + habilidades.get(4);
+
 	}
 
 	public String toString() {
-		if (habilidades == null) {
-			return name;
-		} else {
-			return name + ", Habilidades: " + habilidades.get(0) + ", " + habilidades.get(1) 
-			+ ", " + habilidades.get(2) + ", " + habilidades.get(3) + ", " + habilidades.get(4) ;
-			
-			
-			
-			
-			
+
+		if (habilidade != null) {
+			return name + " [ " + getHabilidade() + "]";
 		}
+		
+		else {return name;}
+
 	}
+
+
 
 }

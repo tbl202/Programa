@@ -1,13 +1,14 @@
 package applcation;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Jogador {
 
+	// STATUS SERVE PRA DECIDIR A VEZ DE QUEM VAI JOGAR NA PARTIDA
+	// TRUE SIGNIFICA QUE E SEU TURNO
 	private String nome;
 	private Personagem personagem;
-	private boolean status = false; // true é sua vez de jogar
+	private boolean status = false;
 
 	public Jogador() {
 	}
@@ -26,7 +27,7 @@ public class Jogador {
 
 	public Personagem getPersonagem() {
 		return personagem;
-	}	
+	}
 
 	public boolean getStatus() {
 		return status;
@@ -36,37 +37,23 @@ public class Jogador {
 		this.status = status;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nome);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Jogador other = (Jogador) obj;
-		return Objects.equals(nome, other.nome);
-	}
-
 	public void setPersonagem(int opcao, List<Personagem> list) {
 
+		// NO METODO ESCOLHERPERSONAGEM NA PARTIDA E CRIADO UMA LISTA PERSONAGEM
+		// O METODO SETPERSONAGEM PEGA E SETA O ELEMENTO QUE ESTA NA POSICAO opcao
+		// E DEFINI QUE O JOGADOR DA LISTJ TENHA ESSE PERSONAGEM COMO SEU
 		this.personagem = list.get(opcao);
 
 	}
 
 	public String toString() {
 
+		// toString PRA QUANDO JOGADOR N TIVER ESCOLHIDO PERSONAGEM OU TIVER
 		if (personagem == null) {
 			return "Nome - " + getNome();
 		} else {
-			return "Jogador - \"" + getNome() + "\", Personagem - " + getPersonagem();
+			return "Jogador - \"" + getNome() + "\", Personagem - " + personagem.toString();
 		}
-
 	}
 
 }

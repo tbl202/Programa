@@ -2,14 +2,17 @@ package applcation;
 
 public class Alternativa {
 
+	// ALTERNATIVA TRUE É A RESPOSTA CORRETA
 	private String resposta;
-	private boolean status; // true certa
+	private boolean status;
 
+	// CONSTRUC PRA ALTERNATIVA FALSA
 	public Alternativa(String resposta) {
 		this.resposta = resposta;
 		this.status = false;
-	}		
+	}
 
+	//CONSTRUC PRA ALTERNATIVA TRUE
 	public Alternativa(String resposta, boolean status) {
 		this.resposta = resposta;
 		this.status = status;

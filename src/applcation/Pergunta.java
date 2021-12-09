@@ -25,12 +25,9 @@ public class Pergunta {
 		return alternativas;
 	}
 
-	public void setAlternativas(List<Alternativa> alternativas) {
-		this.alternativas = alternativas;
-	}
-
 	public void setAlternativas(String a) {
 
+		// CRIA UMA ALTERNATIVA FALSE E ADICIONA NA LISTA
 		Alternativa b = new Alternativa(a);
 		alternativas.add(b);
 
@@ -38,12 +35,15 @@ public class Pergunta {
 
 	private void setAlternativas(String a, boolean x) {
 
+		// CRIA UMA ALTERNATIVA TRUE E ADICIONA NA LISTA
 		Alternativa b = new Alternativa(a, x);
 		alternativas.add(b);
 
 	}
 
 	public List<Pergunta> loadPerguntas() {
+
+		// CRIAR UMA LISTA DE PERGUNTAS E RETORNA ELA
 
 		List<Pergunta> perguntas = Arrays.asList(
 
@@ -97,12 +97,16 @@ public class Pergunta {
 						"Abstração, Encapsulamento, Herança e Polimorfismo.")
 
 		);
-		
+
 		return perguntas;
 
 	}
 
 	public Pergunta criarObjPrgt(String questao, String resp_C, String a, String b, String c, String d) {
+
+		// METODO PRA CRIAR PERGUNTA PASSANDO OS PARAMETROS NECESSARIOS
+		// resp_C DEVE SER IGUAL A ALGUMAS DAS ALTERNATIVAS
+		// DESSA FORMA A ALTERNATIVA CERTA VAI TER SEU STATUS = TRUE
 
 		Pergunta p = new Pergunta();
 
@@ -117,7 +121,7 @@ public class Pergunta {
 			} else {
 				p.setAlternativas(s);
 			}
-			
+
 		}
 
 		return p;
@@ -126,11 +130,9 @@ public class Pergunta {
 
 	public String toString() {
 
-		return "Enunciado: " + getEnunciado() 
-			+ "\n1) " + alternativas.get(0).toString() 
-			+ "\n2) " + alternativas.get(1).toString() 
-			+ "\n3) " + alternativas.get(2).toString()
-			+ "\n4) " + alternativas.get(3).toString();
+		return "Enunciado: " + getEnunciado() + "\n1) " + alternativas.get(0).toString() + "\n2) "
+				+ alternativas.get(1).toString() + "\n3) " + alternativas.get(2).toString() + "\n4) "
+				+ alternativas.get(3).toString();
 
 	}
 

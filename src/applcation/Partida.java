@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class Partida {
 
-	// Necessário implementar uns try catch nos metódos em que o Scanner é
-	// utilizado, evitando a entrada de dados incorretamente
+	// OBS: NECESSARIO ADICIONAR TRY CATCHS PRA EVITAR ENTRADA DE DADOS INVALIDAS
+
 	Scanner sc = new Scanner(System.in);
 
 	List<Jogador> listJ = null;
@@ -57,7 +57,6 @@ public class Partida {
 	 * 
 	 */
 
-	// Falta a linha final
 	public void mostrarMenuInicial() {
 
 		clearConsole();
@@ -91,7 +90,9 @@ public class Partida {
 
 		int x = 0;
 		while (x != 1) {
+
 			clearConsole();
+
 			System.out.println(
 					"O Jogo é um quiz, no qual 2 jogadores jogarão alternando seu turno, acertando ou errando as perguntas");
 			System.out.println(
@@ -132,28 +133,44 @@ public class Partida {
 
 		// 1 - Cadastrar Jogadores
 		cadastroJogador();
-		// 2/3 - Mostrar menu Personagem Escolher Personagem
-		escolherPersonagem(); // dps implementar a seleção do poder aqui
-		// 4 - DefinirJogador (quem começa a partida)
-		definirJogador(); // seta o status de um elemento do ListJ pra true
-		// 5/6 - escolherPergunta, Mostrar Pergunta e alternativas
-		p = mostrarPergunta();
-		// 7 - Verificar Acerto e Erro
+		// 2/3 - ESCOLHER O PERSONAGEM E PODER
+		escolherPersonagem(); 
+		escolherHabilidade();
+		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
+		jogadorComecaPartida(); 
+		// 5 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
+		mostrarPergunta();
+		// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
+		respostaJogador();		
+		// 7 - VERIFICAR SE A PARTIDA ACABOU
+		endPartida();
+		
+		//5, 6 e 7 colocar dentro de do while
+	}
 
-		// o 5/6 e o 7 vao ficar num while que vai ter como verificação olhar se algum
-		// dos Jogadores em listJ tem a vida == 0
+	private void respostaJogador() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void endPartida() {
+		
+		// UMA PARTIDA ACABA QUANDO A VIDA DO PERSONAGEM DE UM JOGADOR CHEGAR A ZERO
+		
 	}
 
 	public Pergunta mostrarPergunta() {
 
+		// RANDOMIZA UMA PERGUNTA CONTIDA NA LISTA PERGUNTAS E SETA A PERGUNTA P (VAZIA NO 1 MOMENTO)
+		// PRA REFERENCIAR ESSA PERGUNTA DENTRO DO ARRAY
 		Random random = new Random();
-		Pergunta p = this.perguntas.get(random.nextInt(perguntas.size()));
-		p.toString();
-		return p;
+		this.p = this.perguntas.get(random.nextInt(perguntas.size()));
+		this.p.toString();
+		return this.p;
 
 	}
 
-	public void definirJogador() {
+	public void jogadorComecaPartida() {
 
 		// RANDOZIMA UM JOGADOR NA LISTJ, E TORNA SEU STATUS = TRUE
 		// PERSONAGENS COM STATUS = TRUE ESTAO NA VEZ DE JOGAR
@@ -169,7 +186,7 @@ public class Partida {
 			listJ.clear();
 		}
 
-		// clearConsole();
+		clearConsole();
 
 		sc.nextLine(); // Limpar buffer
 
@@ -215,8 +232,8 @@ public class Partida {
 
 	}
 
-	// ESSE METÓDO SÓ FUNCIONA SE EXECUTADO DEPOIS DO CADASTRO JOGADOR FOR
-	// COMPLETADO
+	// ESSE METÓDO SÓ FUNCIONA SE EXECUTADO DEPOIS DOS JOGADORES TEREM SIDO
+	// CADASTRADOS (ADD) NA LISTAJ
 	public void escolherPersonagem() {
 
 		// CRIA UMA LISTA PERSONAGEM QUE VAI SER USADA SOMENTE NESSE METÓDO
@@ -267,12 +284,31 @@ public class Partida {
 
 		}
 
+		System.out.println();
 		// APRESENTA NO CONSOLE OS JOGADORES CADASTRADOS COM SEU PERSONAGEM
 		// OBS: (ADD SELEÇÃO DE PODER)
 		for (Jogador j : listJ) {
 
-			System.out.println();
 			System.out.println(j.toString());
+
+		}
+
+	}
+
+	public void escolherHabilidade() {
+
+		// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
+		for (int i = 0; i < listJ.size(); i++) {
+
+			// MOSTRA AS OPCOES DISPONIVEIS
+			System.out.println("Jogador " + listJ.get(i).getNome() + "escolha uma habilidade entre os seguintes:");
+			listJ.get(i).getPersonagem().toStringH();
+
+			// SELECIONA A HABILIDADE
+			// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
+			// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM
+			int opcao = sc.nextInt();
+			listJ.get(i).getPersonagem().setHabilidade(opcao);
 
 		}
 
@@ -281,10 +317,9 @@ public class Partida {
 	// Metodo pra deixar o console Clear
 	public final static void clearConsole() {
 
-		for (int i = 0; i < 15; ++i) {
+		System.out.println();
+		System.out.println();
 
-			System.out.println();
-		}
 	}
 
 }
