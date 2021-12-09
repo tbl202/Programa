@@ -66,7 +66,6 @@ public class Personagem {
 		// VAI DELETAR A LISTA HABILIDADES NO SEU FINAL PRA TER SOMENTE 1 HABILIDADE
 		// PERTENCENTE AO PERSONAGEM
 		opcao--;
-		System.out.println(habilidades.get(opcao).toString());
 		this.habilidade = habilidades.get(opcao);
 		
 	}

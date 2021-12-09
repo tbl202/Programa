@@ -17,6 +17,9 @@ public class Partida {
 	List<Pergunta> perguntas = null;
 	Pergunta p = null;
 
+	// VAR PRA INDICAR A POSICAÇÃO DO JOGADOR QUE N TIVER VIDA = 0 (VENCEDOR)
+	Integer winner = null;
+
 	public Partida() {
 		this.perguntas = new ArrayList<>();
 		this.listJ = new ArrayList<>();
@@ -44,13 +47,13 @@ public class Partida {
 
 			if (opcao == 3) {
 				explicacaoJogo();
-			} else if (opcao == 2) {
+			} if (opcao == 2) {
 				mostrarDesenvolvedores();
-			} else if (opcao == 4) {
+			} if (opcao == 4) {
 				System.exit(0);
-			} else {
-				start();
-			}
+			} 
+				
+			
 		} catch (InputMismatchException ex) {
 
 			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
@@ -59,6 +62,9 @@ public class Partida {
 			mostrarMenuInicial();
 
 		}
+		
+		start();
+		
 	}
 
 	public void explicacaoJogo() {
@@ -73,7 +79,7 @@ public class Partida {
 				+ "\nIndependente do Personagem escolhido, o Jogador não receberá nenhum bonus por isso"
 				+ "\nAlém da escolha dos Personagens, o Jogador também escolherá com qual habilidade deseja jogar"
 				+ "\nDependendo da habilidade escolhida você poderá aplicar suas respectivas ação"
-				+ "\nO Jogador que ERRAR uma questão perderá 25 de vida"
+				+ "\nO Jogador que ERRAR uma questão perderá 20 de vida"
 				+ "\nNesse jogo, o Jogador ganha quando a vida do adversário chegar a zero - 0" + "\n");
 
 		try {
@@ -131,21 +137,23 @@ public class Partida {
 		// OBS : ler os comentários acima para mais detalhes
 
 		// 1 - Cadastrar Jogadores
-		cadastroJogador(); // OK
-		// 2/3 - ESCOLHER O PERSONAGEM E PODER
-		escolherPersonagem(); // ok
-		escolherHabilidade(); // ok
+		cadastroJogador();
+		// 2 - ESCOLHER O PERSONAGEM E PODER
+		escolherPersonagem();
+		// 3 - ESCOLHER HABILIDADE
+		escolherHabilidade();
 		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
-		jogadorComecaPartida(); // OK
+		jogadorComecaPartida();
 		// 5 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
-		mostrarPergunta(); // ok
-		// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
-		respostaJogador(); //ok
-		// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
-		trocarTurno();
-		// 8 - VERIFICAR SE A PARTIDA ACABOU
-		endPartida();
-
+		do {
+			mostrarPergunta();
+			// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
+			respostaJogador();
+			// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
+			trocarTurno();
+			// 8 - VERIFICAR SE A PARTIDA ACABOU
+			endPartida();
+		} while (winner == null);
 	}
 
 	public void trocarTurno() {
@@ -216,8 +224,8 @@ public class Partida {
 					// VERIFICA SE O STATUS DO JOGADOR É TRUE
 					if (listJ.get(i).getStatus() == true) {
 
-						// SUBTRAI A VIDA DO PERSONAGEM POR 25
-						listJ.get(i).getPersonagem().setVida(25);
+						// SUBTRAI A VIDA DO PERSONAGEM POR 20
+						listJ.get(i).getPersonagem().setVida(20);
 
 						System.out.println();
 
@@ -242,8 +250,6 @@ public class Partida {
 
 		// VAR PRA INDICAR A POSIÇÃO DO JOGADOR QUE TIVER VIDA = 0
 		Integer looser = null;
-		// VAR PRA INDICAR A POSICAÇÃO DO JOGADOR QUE N TIVER VIDA = 0 (VENCEDOR)
-		Integer winner = null;
 
 		// UMA PARTIDA ACABA QUANDO A VIDA DO PERSONAGEM DE UM JOGADOR CHEGAR A ZERO
 		for (Jogador jogador : listJ) {
@@ -274,8 +280,9 @@ public class Partida {
 
 					// PARABENIZAR O VENCEDOR
 					System.out.println();
-					System.out.println("CONGRATULATIONS!!!!!");
-					System.out.println(listJ.get(winner).toStringWinner());
+					System.out.println("-------CONGRATULATIONS!!!!!-------");
+					System.out.println();
+					System.out.println("VENCEDOR DA PARTIDA: " + listJ.get(winner).toStringWinner());
 
 				}
 			}
@@ -465,15 +472,13 @@ public class Partida {
 				// MOSTRA AS OPCOES DISPONIVEIS
 				System.out.println(listJ.get(i).getPersonagem().toStringH());
 				System.out.println();
-				System.out.println(
-						"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas:");
+				System.out.print("Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
+						
 
 				// SELECIONA A HABILIDADE
 				// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
 				// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
 				int opcao = sc.nextInt();
-
-				System.out.println(listJ.get(i).getPersonagem().toString());
 
 				listJ.get(i).getPersonagem().setHabilidade(opcao);
 
@@ -490,7 +495,6 @@ public class Partida {
 
 	}
 
-	// Metodo pra deixar o console Clear
 
 	public final static void clearConsole() {
 

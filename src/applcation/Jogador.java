@@ -48,7 +48,7 @@ public class Jogador {
 	
 	public String toStringWinner() {
 		
-		return "Jogador - \"" + getNome();
+		return getNome();
 		
 	}
 
