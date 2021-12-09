@@ -45,6 +45,12 @@ public class Jogador {
 		this.personagem = list.get(opcao);
 
 	}
+	
+	public String toStringWinner() {
+		
+		return "Jogador - \"" + getNome();
+		
+	}
 
 	public String toString() {
 
@@ -54,6 +60,13 @@ public class Jogador {
 		} else {
 			return "Jogador - \"" + getNome() + "\", Personagem - " + personagem.toString();
 		}
+	}
+	
+	public String toStringV() {
+		
+		//PRINTAR O JOGADOR E SUA VIDA
+		return "Jogador - \"" + getNome() + "\", Vida - " + personagem.getVida();
+		
 	}
 
 }

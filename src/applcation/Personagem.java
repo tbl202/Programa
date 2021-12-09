@@ -10,7 +10,7 @@ public class Personagem {
 	// false ñ escolhido
 	// true escolhido
 	private boolean status;
-	private Integer vida;
+	private int vida;
 	private String habilidade;
 
 	public Personagem(String name) {
