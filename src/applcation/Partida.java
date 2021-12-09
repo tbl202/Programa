@@ -48,13 +48,14 @@ public class Partida {
 
 			if (opcao == 3) {
 				explicacaoJogo();
-			} if (opcao == 2) {
+			}
+			if (opcao == 2) {
 				mostrarDesenvolvedores();
-			} if (opcao == 4) {
+			}
+			if (opcao == 4) {
 				System.exit(0);
-			} 
-				
-			
+			}
+
 		} catch (InputMismatchException ex) {
 
 			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
@@ -63,9 +64,9 @@ public class Partida {
 			mostrarMenuInicial();
 
 		}
-		
+
 		start();
-		
+
 	}
 
 	public void explicacaoJogo() {
@@ -145,22 +146,23 @@ public class Partida {
 		escolherHabilidade();
 		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
 		jogadorComecaPartida();
-		
+
 		do {
-			
-			//5 - RANDOMIZAR A PERGUNTA CONTIDA NA LISTA E SETAR A PERGUNTA P REFERENCIANDO ELA
+
+			// 5 - RANDOMIZAR A PERGUNTA CONTIDA NA LISTA E SETAR A PERGUNTA P REFERENCIANDO
+			// ELA
 			randomPergunta();
 			// 6 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
-			mostrarPergunta();
+			// mostrarPergunta(); ESTA CONTIDA NA RESPOSTA JOGADOR PRA SER MAIS CONVENIENTE
 			// 7 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
 			respostaJogador();
 			// 8 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
 			trocarTurno();
 			// 9 - VERIFICAR SE A PARTIDA ACABOU
 			endPartida();
-			
+
 		} while (winner == null);
-		
+
 	}
 
 	public void trocarTurno() {
@@ -197,6 +199,7 @@ public class Partida {
 		// METODO PRA PRINTAR O JOGADOR QUE RESPONDEU A PERGUNTA ANTERIOR (ESSE COMANDO
 		// É MAIS FACIL
 		// AQUI DENTRO)
+		System.out.println();
 		System.out.println(listJ.get(jgdT).toStringV());
 
 		// ALTERAR OS STATUS DOS JOGADORES DA LISTA
@@ -207,24 +210,23 @@ public class Partida {
 
 	public void respostaJogador() {
 		try {
-			
+
 			// DA A OPCAO DO JOGADOR DECIDIR USAR O PODER
-			
+
 			// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
 			// PERSONAGEM
-			System.out.println();
-			System.out.printf("Resposta: ");
-			int opcao = sc.nextInt();
-			opcao--;
-			
-			System.out.println("Você tem certeza da sua resposta? (s/n)? ");
-			char confirmacao = sc.next().charAt(0);
-			
-			if(confirmacao == 'n') {
-				
+			int opcao;
+
+			do {
+
 				mostrarPergunta();
-				
-			} 
+
+				System.out.println();
+				System.out.printf("Resposta: ");
+				opcao = sc.nextInt();
+				opcao--;
+
+			} while (confirmacaoResposta());
 
 			System.out.println();
 			// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
@@ -253,16 +255,15 @@ public class Partida {
 				}
 
 			}
-			
+
 			System.out.println("A próxima pergunta aparece em 3 seg...");
-			
+
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
 			// PRINT DO JOGADOR ESTA NO METODO TROCAR TURNO POR SER MAIS CONVENIENTE
 		} catch (InputMismatchException ex) {
@@ -273,6 +274,19 @@ public class Partida {
 			respostaJogador();
 
 		}
+	}
+
+	public boolean confirmacaoResposta() {
+
+		boolean result = true;
+		
+		System.out.println("Você tem certeza da sua resposta? (s/n)? ");
+		char confirmacao = sc.next().charAt(0);
+
+		if (confirmacao == 's') { result = false; }
+		
+		return result;
+
 	}
 
 	public void endPartida() {
@@ -321,7 +335,7 @@ public class Partida {
 	}
 
 	public void randomPergunta() {
-		
+
 		// RANDOMIZA UMA PERGUNTA CONTIDA NA LISTA PERGUNTAS E SETA A PERGUNTA P (VAZIA
 		// NO 1 MOMENTO)
 		// PRA REFERENCIAR ESSA PERGUNTA DENTRO DO ARRAY
@@ -329,12 +343,12 @@ public class Partida {
 
 		Random random = new Random();
 		this.p = this.perguntas.get(random.nextInt(perguntas.size()));
-		
+
 	}
-	
+
 	public void mostrarPergunta() {
 
-		//PRINTA A PERGUNTA p NO CONSOLE
+		// PRINTA A PERGUNTA p NO CONSOLE
 		System.out.println();
 
 		// INFORMA A QUAL JOGADOR A PERGUNTA SE DESTINA
@@ -342,7 +356,8 @@ public class Partida {
 
 			if (jogador.getStatus() == true) {
 
-				System.out.println("Jogador da vez: " + jogador.getNome() + " (" + jogador.getPersonagem().getVida() + "% de vida) ");
+				System.out.println("Jogador da vez: " + jogador.getNome() + " (" + jogador.getPersonagem().getVida()
+						+ "% de vida) ");
 
 			}
 
@@ -499,17 +514,17 @@ public class Partida {
 	public void escolherHabilidade() {
 
 		try {
-			
+
 			// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
 			for (int i = 0; i < listJ.size(); i++) {
 
 				clearConsole();
-				
+
 				// MOSTRA AS OPCOES DE HABILIDADES DISPONIVEIS PARA ESCOLHA
 				System.out.println(listJ.get(i).getPersonagem().toStringH());
 				System.out.println();
-				System.out.print("Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
-						
+				System.out.print(
+						"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
 
 				// SELECIONA A HABILIDADE
 				// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
@@ -530,7 +545,6 @@ public class Partida {
 		}
 
 	}
-
 
 	public final static void clearConsole() {
 
