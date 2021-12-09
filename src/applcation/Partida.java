@@ -53,7 +53,7 @@ public class Partida {
 			}
 		} catch (InputMismatchException ex) {
 
-			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
 			sc.nextLine();
 
 			mostrarMenuInicial();
@@ -72,7 +72,7 @@ public class Partida {
 				+ "\nCada Jogador terá que escolher qual Personagem deseja jogar"
 				+ "\nIndependente do Personagem escolhido, o Jogador não receberá nenhum bonus por isso"
 				+ "\nAlém da escolha dos Personagens, o Jogador também escolherá com qual habilidade deseja jogar"
-				+ "\nDependendo da habilidade escolhida você poderá aplicar suas respectivas ação" 
+				+ "\nDependendo da habilidade escolhida você poderá aplicar suas respectivas ação"
 				+ "\nO Jogador que ERRAR uma questão perderá 25 de vida"
 				+ "\nNesse jogo, o Jogador ganha quando a vida do adversário chegar a zero - 0" + "\n");
 
@@ -86,7 +86,7 @@ public class Partida {
 
 		} catch (InputMismatchException ex) {
 
-			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
 			sc.nextLine();
 
 			explicacaoJogo();
@@ -117,7 +117,7 @@ public class Partida {
 
 		} catch (InputMismatchException ex) {
 
-			System.out.println("\nVocê deve ter digitado uma letra. Tente outra");
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
 			sc.nextLine();
 
 			mostrarDesenvolvedores();
@@ -126,22 +126,21 @@ public class Partida {
 
 	}
 
-	
 	public void start() {
 		// Metódo que inicia a partida
 		// OBS : ler os comentários acima para mais detalhes
 
 		// 1 - Cadastrar Jogadores
-		cadastroJogador();
+		cadastroJogador(); // OK
 		// 2/3 - ESCOLHER O PERSONAGEM E PODER
-		escolherPersonagem();
-		escolherHabilidade();
+		escolherPersonagem(); // ok
+		escolherHabilidade(); // ok
 		// 4 - DEFINI QUAL JOGADOR NA LISTAJ VAI COMEÇAR (STATUS = TRUE)
-		jogadorComecaPartida();
+		jogadorComecaPartida(); // OK
 		// 5 - MOSTAR A PERGUNTA E COLOCAR A PERGUNTA P COMO SENDO ESSA PERGUNTA
-		mostrarPergunta();
+		mostrarPergunta(); // ok
 		// 6 - VERIFICA A RESPOSTA DO JOGADOR, E MUDA SUA VIDA, DEPENDENDO DA RESPOSTA
-		respostaJogador();
+		respostaJogador(); //ok
 		// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
 		trocarTurno();
 		// 8 - VERIFICAR SE A PARTIDA ACABOU
@@ -150,131 +149,139 @@ public class Partida {
 	}
 
 	public void trocarTurno() {
-		
+
 		// TROCA OS STATUS DOS JOGADORES CONTIDOS NA LISTAJ
-		
-		// JOGADORES USADO PRA COMPARAR MAIS TARDE COM A LISTA 
+
+		// JOGADORES USADO PRA COMPARAR MAIS TARDE COM A LISTA
 		Jogador statusT = null;
 		Jogador statusF = null;
-		
-		// COLOCAR OS JOGADORES statusT e statusF PRA REFERENCIA O JOGADOR CONTIDO NA LISTA 
-		// CRIA UM JOGADOR LOCAL IGUAL OS DA LIDA 
+
+		// COLOCAR OS JOGADORES statusT e statusF PRA REFERENCIA O JOGADOR CONTIDO NA
+		// LISTA
+		// CRIA UM JOGADOR LOCAL IGUAL OS DA LIDA
 		for (Jogador jogador : listJ) {
-			
+
 			if (jogador.getStatus() == true) {
-				
+
 				statusT = jogador;
-				
+
 			}
-			
+
 			else {
-				
+
 				statusF = jogador;
-				
+
 			}
-			
+
 		}
-		
+
 		// RETORNA A POSIÇÃO (INDEX) DO JOGADOR PASSADO COMO PARAMETRO NA LISTA
 		int jgdT = listJ.indexOf(statusT);
 		int jgdF = listJ.indexOf(statusF);
-		
-		// METODO PRA PRINTAR O JOGADOR QUE RESPONDEU A PERGUNTA ANTERIOR (ESSE COMANDO É MAIS FACIL
+
+		// METODO PRA PRINTAR O JOGADOR QUE RESPONDEU A PERGUNTA ANTERIOR (ESSE COMANDO
+		// É MAIS FACIL
 		// AQUI DENTRO)
 		System.out.println(listJ.get(jgdT).toStringV());
-		
+
 		// ALTERAR OS STATUS DOS JOGADORES DA LISTA
 		listJ.get(jgdT).setStatus(false);
 		listJ.get(jgdF).setStatus(true);
-		
+
 	}
 
 	public void respostaJogador() {
+		try {
+			// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
+			// PERSONAGEM
+			System.out.println();
+			System.out.printf("Resposta: ");
+			int opcao = sc.nextInt();
+			opcao--;
 
-		// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
-		// PERSONAGEM
-		System.out.println();
-		System.out.printf("Resposta: ");
-		int opcao = sc.nextInt();
-		opcao--;
+			System.out.println();
+			// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
+			if (p.getAlternativas().get(opcao).getStatus() == true) {
 
-		System.out.println();
-		// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
-		if (p.getAlternativas().get(opcao).getStatus() == true) {
+				System.out.println("Você acertou!");
 
-			System.out.println("Você acertou!");
+			}
 
-		}
+			else {
 
-		else {
+				System.out.println("BUUU! Infelizmente você errou");
 
-			System.out.println("BUUU! Infelizmente você errou");
+				for (int i = 0; i < listJ.size(); i++) {
 
-			for (int i = 0; i < listJ.size(); i++) {
+					// VERIFICA SE O STATUS DO JOGADOR É TRUE
+					if (listJ.get(i).getStatus() == true) {
 
-				// VERIFICA SE O STATUS DO JOGADOR É TRUE
-				if (listJ.get(i).getStatus() == true) {
+						// SUBTRAI A VIDA DO PERSONAGEM POR 25
+						listJ.get(i).getPersonagem().setVida(25);
 
-					// SUBTRAI A VIDA DO PERSONAGEM POR 25
-					listJ.get(i).getPersonagem().setVida(25);
+						System.out.println();
 
-					System.out.println();
-					
+					}
+
 				}
 
 			}
 
+			// PRINT DO JOGADOR ESTA NO METODO TROCAR TURNO POR SER MAIS CONVENIENTE
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
+			sc.nextLine();
+
+			respostaJogador();
+
 		}
-		
-		// PRINT DO JOGADOR ESTA NO METODO TROCAR TURNO POR SER MAIS CONVENIENTE
-		
 	}
-	
 
 	public void endPartida() {
-		
-		// VAR PRA INDICAR A POSIÇÃO DO JOGADOR QUE TIVER VIDA = 0 
+
+		// VAR PRA INDICAR A POSIÇÃO DO JOGADOR QUE TIVER VIDA = 0
 		Integer looser = null;
 		// VAR PRA INDICAR A POSICAÇÃO DO JOGADOR QUE N TIVER VIDA = 0 (VENCEDOR)
 		Integer winner = null;
-		
+
 		// UMA PARTIDA ACABA QUANDO A VIDA DO PERSONAGEM DE UM JOGADOR CHEGAR A ZERO
 		for (Jogador jogador : listJ) {
-			
+
 			// VERIFICAR SE O PERSONAGEM DO JOGADOR TEM A VIDA = 0
-			if(jogador.getPersonagem().getVida() == 0) {
+			if (jogador.getPersonagem().getVida() == 0) {
 
 				// POSIÇÃO DO JOGADOR QUE PERDEU
 				looser = listJ.indexOf(jogador);
-				
+
 				// AUMENTAR OU DIMINUIR LOOSER ME DA A POSIÇÃO DO JOGADOR VENCEDOR
-				if(looser == 1) {
-					
+				if (looser == 1) {
+
 					// POSIÇÃO NA LISTJ DO JOGADOR QUE GANHOU
 					winner = looser - 1;
-					
+
 					// PARABENIZAR O VENCEDOR
 					System.out.println();
 					System.out.println("CONGRATULATIONS!!!!!");
 					System.out.println(listJ.get(winner).toStringWinner());
-					
+
 				}
-				
-				if(looser == 0) {
-					
+
+				if (looser == 0) {
+
 					// POSIÇÃO NA LISTJ DO JOGADOR QUE GANHOU
 					winner = looser + 1;
-					
+
 					// PARABENIZAR O VENCEDOR
 					System.out.println();
 					System.out.println("CONGRATULATIONS!!!!!");
 					System.out.println(listJ.get(winner).toStringWinner());
-					
+
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	public void mostrarPergunta() {
@@ -299,9 +306,9 @@ public class Partida {
 			}
 
 		}
-		
+
 		System.out.println();
-		
+
 		// PRINTA A PERGUNTA NA TELA
 		System.out.println(this.p.toString());
 
@@ -317,7 +324,6 @@ public class Partida {
 
 	}
 
-	
 	public void cadastroJogador() {
 
 		if (listJ.size() != 0) {
@@ -349,7 +355,7 @@ public class Partida {
 		for (Jogador jgd : listJ) {
 			System.out.printf("\nJogadores cadastrados: " + jgd);
 		}
-		
+
 		System.out.println("\n\nPres Enter to Continue...");
 
 	}
@@ -375,96 +381,117 @@ public class Partida {
 	// ESSE METÓDO SÓ FUNCIONA SE EXECUTADO DEPOIS DOS JOGADORES TEREM SIDO
 	// CADASTRADOS (ADD) NA LISTAJ
 	public void escolherPersonagem() {
+		try {
+			// CRIA UMA LISTA PERSONAGEM QUE VAI SER USADA SOMENTE NESSE METÓDO
+			List<Personagem> listTemporaria = Arrays.asList(
 
-		// CRIA UMA LISTA PERSONAGEM QUE VAI SER USADA SOMENTE NESSE METÓDO
-		List<Personagem> listTemporaria = Arrays.asList(
+					new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
+					new Personagem("Mago"), new Personagem("Silvio Santos")
 
-				new Personagem("Guerreiro"), new Personagem("Arqueiro"), new Personagem("Caçador"),
-				new Personagem("Mago"), new Personagem("Silvio Santos")
+			);
 
-		);
+			Integer opcao;
 
-		Integer opcao;
+			sc.nextLine(); // LIMPAR BUFFER
 
-		sc.nextLine(); // LIMPAR BUFFER
+			for (int i = 0; i < listJ.size(); i++) {
 
-		for (int i = 0; i < listJ.size(); i++) {
+				System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
+				System.out.println();
 
-			System.out.println("\nJogador \"" + listJ.get(i).getNome() + "\" escolha seu Personagem: ");
+				int cont = 1;
+				for (Personagem pers : listTemporaria) {
 
-			int cont = 1;
-			for (Personagem pers : listTemporaria) {
+					// PERSONAGEM COM STATUS = TRUE FORAM SELECIONADOS, ESSE IF SÓ MOSTRA
+					// PERSONAGENS NA LISTA
+					// COM STATUS = FALSE (DISPONIVEL)
+					if (!pers.getStatus()) {
+						System.out.println("[" + cont + "] " + "Nome: " + pers.toString());
 
-				// PERSONAGEM COM STATUS = TRUE FORAM SELECIONADOS, ESSE IF SÓ MOSTRA
-				// PERSONAGENS NA LISTA
-				// COM STATUS = FALSE (DISPONIVEL)
-				if (!pers.getStatus()) {
-					System.out.println("[" + cont + "] " + "Nome: " + pers.toString());
+					}
+
+					cont++;
 
 				}
 
-				cont++;
+				// COMO Ñ CONSEGUI REMOVER O PERSONAGEM DA LISTA PERSONAGEM ESSE DO/WHILE
+				// GARANTE QUE UM PERSONAGEM QUE TEM O STATUS TRUE NÃO APAREÇA
+				// E IMPEDE O USUÁRIO DE SELECIONALO COM A 3 CONDICAO
+
+				// SE COLOCAR ISSO NUM OUTRO METODO PASSANDO A LISTA COMO PARAMETRO DA PRA
+				// COLOCAR NUM TRY CATCH
+				// E EVITAR ERROS DE CODIGO
+				// ESSE METODO TEM QUE RETORNA A OPCAO ESCOLHIDA
+				do {
+
+					System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
+					System.out.print("\nEscolha (1 - 5): ");
+					opcao = sc.nextInt();
+					opcao--;
+
+				} while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
+
+				listTemporaria.get(opcao).setStatus(true);
+				listJ.get(i).setPersonagem(opcao, listTemporaria);
 
 			}
 
-			// COMO Ñ CONSEGUI REMOVER O PERSONAGEM DA LISTA PERSONAGEM ESSE DO/WHILE
-			// GARANTE QUE UM PERSONAGEM QUE TEM O STATUS TRUE NÃO APAREÇA
-			// E IMPEDE O USUÁRIO DE SELECIONALO COM A 3 CONDICAO
-	
-			// SE COLOCAR ISSO NUM OUTRO METODO PASSANDO A LISTA COMO PARAMETRO DA PRA COLOCAR NUM TRY CATCH 
-			// E EVITAR ERROS DE CODIGO		
-			// ESSE METODO TEM QUE RETORNA A OPCAO ESCOLHIDA 
-			do {
+			System.out.println();
+			// APRESENTA NO CONSOLE OS JOGADORES CADASTRADOS COM SEU PERSONAGEM
+			// OBS: (ADD SELEÇÃO DE PODER)
+			for (Jogador j : listJ) {
 
-				System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
-				System.out.print("\nEscolha (1 - 5): ");
-				opcao = sc.nextInt();
-				opcao--;
+				System.out.println(j.toString());
 
-			} while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
+			}
 
-			listTemporaria.get(opcao).setStatus(true);
-			listJ.get(i).setPersonagem(opcao, listTemporaria);
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
+			sc.nextLine();
+
+			escolherPersonagem();
 
 		}
-
-		System.out.println();
-		// APRESENTA NO CONSOLE OS JOGADORES CADASTRADOS COM SEU PERSONAGEM
-		// OBS: (ADD SELEÇÃO DE PODER)
-		for (Jogador j : listJ) {
-
-			System.out.println(j.toString());
-
-		}
-
 	}
 
 	public void escolherHabilidade() {
 
-		// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
-		for (int i = 0; i < listJ.size(); i++) {
+		try {
+			// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
+			for (int i = 0; i < listJ.size(); i++) {
 
-			clearConsole();
-			// MOSTRA AS OPCOES DISPONIVEIS
-			System.out.println(listJ.get(i).getPersonagem().toStringH());
-			System.out.println();
-			System.out.println("Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas:");
+				clearConsole();
+				// MOSTRA AS OPCOES DISPONIVEIS
+				System.out.println(listJ.get(i).getPersonagem().toStringH());
+				System.out.println();
+				System.out.println(
+						"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas:");
 
-			// SELECIONA A HABILIDADE
-			// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
-			// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
-			int opcao = sc.nextInt();
+				// SELECIONA A HABILIDADE
+				// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
+				// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
+				int opcao = sc.nextInt();
 
-			System.out.println(listJ.get(i).getPersonagem().toString());
+				System.out.println(listJ.get(i).getPersonagem().toString());
 
-			listJ.get(i).getPersonagem().setHabilidade(opcao);
+				listJ.get(i).getPersonagem().setHabilidade(opcao);
+
+			}
+
+		} catch (InputMismatchException ex) {
+
+			System.out.println("\nVocê deve ter digitado uma letra. Tente denovo");
+			sc.nextLine();
+
+			escolherHabilidade();
 
 		}
 
 	}
 
 	// Metodo pra deixar o console Clear
-	
+
 	public final static void clearConsole() {
 
 		System.out.println();
