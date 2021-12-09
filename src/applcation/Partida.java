@@ -253,6 +253,16 @@ public class Partida {
 				}
 
 			}
+			
+			System.out.println("A próxima pergunta aparece em 3 seg...");
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 
 			// PRINT DO JOGADOR ESTA NO METODO TROCAR TURNO POR SER MAIS CONVENIENTE
 		} catch (InputMismatchException ex) {
