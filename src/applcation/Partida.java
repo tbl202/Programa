@@ -176,7 +176,6 @@ public class Partida {
 		respostaJogador();
 		// 7 - MUDAR O TURNO (TROCAR OS STATUS DOS JOGADORES)
 		trocarTurno();
-		// trocarTurno();
 		// 8 - VERIFICAR SE A PARTIDA ACABOU
 		endPartida();
 
@@ -187,12 +186,35 @@ public class Partida {
 		
 		// TROCA OS STATUS DOS JOGADORES CONTIDOS NA LISTAJ
 		
-		for (int i = 0; i < listJ.size(); i++) {
+		// JOGADORES USADO PRA COMPARAR MAIS TARDE COM A LISTA 
+		Jogador statusT = null;
+		Jogador statusF = null;
+		
+		// COLOCAR OS JOGADORES statusT e statusF PRA REFERENCIA O JOGADOR CONTIDO NA LISTA 
+		// CRIA UM JOGADOR LOCAL IGUAL OS DA LIDA 
+		for (Jogador jogador : listJ) {
 			
+			if (jogador.getStatus() == true) {
+				
+				statusT = jogador;
+				
+			}
 			
+			else {
+				
+				statusF = jogador;
+				
+			}
 			
 		}
 		
+		// RETORNA A POSIÇÃO (INDEX) DO JOGADOR PASSADO COMO PARAMETRO NA LISTA
+		int jgdT = listJ.indexOf(statusT);
+		int jgdF = listJ.indexOf(statusF);
+		
+		// ALTERAR OS STATUS DOS JOGADORES DA LISTA
+		listJ.get(jgdT).setStatus(false);
+		listJ.get(jgdF).setStatus(true);
 		
 	}
 
@@ -371,6 +393,10 @@ public class Partida {
 			// COMO Ñ CONSEGUI REMOVER O PERSONAGEM DA LISTA PERSONAGEM ESSE DO/WHILE
 			// GARANTE QUE UM PERSONAGEM QUE TEM O STATUS TRUE NÃO APAREÇA
 			// E IMPEDE O USUÁRIO DE SELECIONALO COM A 3 CONDICAO
+	
+			// SE COLOCAR ISSO NUM OUTRO METODO PASSANDO A LISTA COMO PARAMETRO DA PRA COLOCAR NUM TRY CATCH 
+			// E EVITAR ERROS DE CODIGO		
+			// ESSE METODO TEM QUE RETORNA A OPCAO ESCOLHIDA 
 			do {
 
 				System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
