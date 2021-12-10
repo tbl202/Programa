@@ -11,5 +11,7 @@ public class Drive {
 		// VER A EXPLICAÇÃO DO JOGO OU SAIR
 		j.mostrarMenuInicial();
 		
+		System.exit(0);
+		
 	}
 }

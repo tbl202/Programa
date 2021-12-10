@@ -216,7 +216,7 @@ public class Partida {
 			// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
 			// PERSONAGEM
 			int opcao;
-
+			
 			do {
 
 				mostrarPergunta();
@@ -224,15 +224,18 @@ public class Partida {
 				System.out.println();
 				System.out.printf("Resposta: ");
 				opcao = sc.nextInt();
-				opcao--;
 
-			} while (confirmacaoResposta());
+			} while (opcao < 1 || opcao > 5);
 
+			//TRATA A OPCAO PRA USAR NA LIST
+			opcao--;
+			
 			System.out.println();
 			// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
 			if (p.getAlternativas().get(opcao).getStatus() == true) {
 
 				System.out.println("Você acertou!");
+				System.out.println();
 
 			}
 
@@ -279,12 +282,17 @@ public class Partida {
 	public boolean confirmacaoResposta() {
 
 		boolean result = true;
+		char confirmacao;
 		
-		System.out.println("Você tem certeza da sua resposta? (s/n)? ");
-		char confirmacao = sc.next().charAt(0);
+		do {
+			System.out.print("Você tem certeza da sua resposta? (s/n)? ");
+			confirmacao = sc.next().charAt(0);
+		} while (confirmacao != 's' || confirmacao == 'n' || confirmacao != 'S' || confirmacao != 'N');
 
-		if (confirmacao == 's') { result = false; }
-		
+		if (confirmacao == 's' || confirmacao == 'S') {
+			result = false;
+		}
+
 		return result;
 
 	}
@@ -311,8 +319,9 @@ public class Partida {
 
 					// PARABENIZAR O VENCEDOR
 					System.out.println();
-					System.out.println("CONGRATULATIONS!!!!!");
-					System.out.println(listJ.get(winner).toStringWinner());
+					System.out.println("-------CONGRATULATIONS!!!!!-------");
+					System.out.println();
+					System.out.println("VENCEDOR DA PARTIDA: " + listJ.get(winner).toStringWinner());
 
 				}
 
@@ -478,14 +487,18 @@ public class Partida {
 				// COLOCAR NUM TRY CATCH
 				// E EVITAR ERROS DE CODIGO
 				// ESSE METODO TEM QUE RETORNA A OPCAO ESCOLHIDA
+				int x = 0;
+				
 				do {
 
 					System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
 					System.out.print("\nEscolha (1 - 5): ");
 					opcao = sc.nextInt();
-					opcao--;
+					x = opcao - 1;
+					
+				} while (opcao < 1 || opcao > 5 || listTemporaria.get(x).getStatus());
 
-				} while (opcao < 0 || opcao > 6 || listTemporaria.get(opcao).getStatus());
+				opcao--;
 
 				listTemporaria.get(opcao).setStatus(true);
 				listJ.get(i).setPersonagem(opcao, listTemporaria);
@@ -508,11 +521,20 @@ public class Partida {
 
 			escolherPersonagem();
 
+		} catch (ArrayIndexOutOfBoundsException ex) {
+
+			System.out.println("\nVocê deve ter digitado um numero maior que o solicitado. Tente denovo");
+			sc.nextLine();
+
+			escolherPersonagem();
+
 		}
 	}
 
 	public void escolherHabilidade() {
 
+		int opcao = 0;
+		
 		try {
 
 			// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
@@ -523,14 +545,19 @@ public class Partida {
 				// MOSTRA AS OPCOES DE HABILIDADES DISPONIVEIS PARA ESCOLHA
 				System.out.println(listJ.get(i).getPersonagem().toStringH());
 				System.out.println();
-				System.out.print(
-						"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
+
 
 				// SELECIONA A HABILIDADE
 				// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
 				// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
-				int opcao = sc.nextInt();
-
+				do {
+					
+					System.out.print(
+							"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
+					opcao = sc.nextInt();
+				
+				} while ( opcao < 1 || opcao > 5);
+				
 				listJ.get(i).getPersonagem().setHabilidade(opcao);
 
 			}
