@@ -48,12 +48,12 @@ public class Partida {
 
 			if (opcao == 3) {
 				explicacaoJogo();
-			}
-			if (opcao == 2) {
+			} else if (opcao == 2) {
 				mostrarDesenvolvedores();
-			}
-			if (opcao == 4) {
+			} else if (opcao == 4) {
 				System.exit(0);
+			} else {
+				start();
 			}
 
 		} catch (InputMismatchException ex) {
@@ -64,8 +64,6 @@ public class Partida {
 			mostrarMenuInicial();
 
 		}
-
-		start();
 
 	}
 
@@ -216,7 +214,7 @@ public class Partida {
 			// SOMENTE O JOGADOR COM O STATUS TRUE SOFRERA COM A PERDA DE VIDA DE SEU
 			// PERSONAGEM
 			int opcao;
-			
+
 			do {
 
 				mostrarPergunta();
@@ -227,9 +225,9 @@ public class Partida {
 
 			} while (opcao < 1 || opcao > 5);
 
-			//TRATA A OPCAO PRA USAR NA LIST
+			// TRATA A OPCAO PRA USAR NA LIST
 			opcao--;
-			
+
 			System.out.println();
 			// VERIFICAR SE A ALTERNATIVA SELECIONA É A CORRETA (STATUS = TRUE)
 			if (p.getAlternativas().get(opcao).getStatus() == true) {
@@ -283,7 +281,7 @@ public class Partida {
 
 		boolean result = true;
 		char confirmacao;
-		
+
 		do {
 			System.out.print("Você tem certeza da sua resposta? (s/n)? ");
 			confirmacao = sc.next().charAt(0);
@@ -488,14 +486,14 @@ public class Partida {
 				// E EVITAR ERROS DE CODIGO
 				// ESSE METODO TEM QUE RETORNA A OPCAO ESCOLHIDA
 				int x = 0;
-				
+
 				do {
 
 					System.out.print("\nPersonagens já escolhidos não podem ser escolhido de novo.");
 					System.out.print("\nEscolha (1 - 5): ");
 					opcao = sc.nextInt();
 					x = opcao - 1;
-					
+
 				} while (opcao < 1 || opcao > 5 || listTemporaria.get(x).getStatus());
 
 				opcao--;
@@ -534,7 +532,7 @@ public class Partida {
 	public void escolherHabilidade() {
 
 		int opcao = 0;
-		
+
 		try {
 
 			// NO 1 MOMENTO O PERSONAGEM DO JOGADOR I TEM TODAS AS HABILIDADES
@@ -546,18 +544,17 @@ public class Partida {
 				System.out.println(listJ.get(i).getPersonagem().toStringH());
 				System.out.println();
 
-
 				// SELECIONA A HABILIDADE
 				// OPCAO TRATADA (-1) DENTRO DO SETHABILIDADE
 				// LIMPA A LISTA DE HABILIDADE QUE O PERSONAGEM TEM (não consegui)
 				do {
-					
+
 					System.out.print(
 							"Jogador \"" + listJ.get(i).getNome() + "\" escolha uma habilidade entre as mostradas: ");
 					opcao = sc.nextInt();
-				
-				} while ( opcao < 1 || opcao > 5);
-				
+
+				} while (opcao < 1 || opcao > 5);
+
 				listJ.get(i).getPersonagem().setHabilidade(opcao);
 
 			}
